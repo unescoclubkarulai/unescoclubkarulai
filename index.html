@@ -1,7 +1,133 @@
-<div class="space-y-6 text-left">
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>യുനെസ്കോ ആർട്സ് & സ്പോർട്സ് ക്ലബ്, പിലാക്കോട്ടുപാടം</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Manjari', sans-serif;
+        }
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://placehold.co/1200x800/334155/ffffff?text=Club+Activities') no-repeat center center;
+            background-size: cover;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+
+    <!-- Header Section -->
+    <header class="bg-slate-800/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-cyan-400">യുനെസ്കോ ക്ലബ്</h1>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-cyan-400 transition duration-300">ഹോം</a>
+                <a href="#about" class="hover:text-cyan-400 transition duration-300">ഞങ്ങളെക്കുറിച്ച്</a>
+                <a href="#activities" class="hover:text-cyan-400 transition duration-300">പ്രവർത്തനങ്ങൾ</a>
+                <a href="#gallery" class="hover:text-cyan-400 transition duration-300">ഗാലറി</a>
+                <a href="#contact" class="hover:text-cyan-400 transition duration-300">ബന്ധപ്പെടുക</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#home" class="block py-2 hover:text-cyan-400 transition duration-300">ഹോം</a>
+            <a href="#about" class="block py-2 hover:text-cyan-400 transition duration-300">ഞങ്ങളെക്കുറിച്ച്</a>
+            <a href="#activities" class="block py-2 hover:text-cyan-400 transition duration-300">പ്രവർത്തനങ്ങൾ</a>
+            <a href="#gallery" class="block py-2 hover:text-cyan-400 transition duration-300">ഗാലറി</a>
+            <a href="#contact" class="block py-2 hover:text-cyan-400 transition duration-300">ബന്ധപ്പെടുക</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-bg h-[60vh] flex items-center justify-center text-center">
+            <div class="bg-black/50 p-8 rounded-lg fade-in">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4 text-white">യുനെസ്കോ ആർട്സ് & സ്പോർട്സ് ക്ലബ്</h2>
+                <p class="text-xl md:text-2xl text-cyan-300">പിലാക്കോട്ടുപാടം</p>
+                <p class="mt-4 text-lg text-slate-200">കലയുടെയും കായികത്തിൻ്റെയും സൗഹൃദത്തിൻ്റെയും സംഗമസ്ഥാനം</p>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-20 bg-slate-900">
+            <div class="container mx-auto px-6 text-center fade-in">
+                <h3 class="text-3xl font-bold mb-4 text-cyan-400">ഞങ്ങളെക്കുറിച്ച്</h3>
+                <div class="w-24 h-1 bg-cyan-400 mx-auto mb-8"></div>
+                <p class="max-w-3xl mx-auto text-lg leading-relaxed text-slate-300">
+                    പിലാക്കോട്ടുപാടം ഗ്രാമത്തിലെ യുവജനങ്ങളുടെ കലാ-കായിക വാസനകളെ പ്രോത്സാഹിപ്പിക്കുക എന്ന ലക്ഷ്യത്തോടെ സ്ഥാപിതമായ ഒരു കൂട്ടായ്മയാണ് യുനെസ്കോ ആർട്സ് & സ്പോർട്സ് ക്ലബ്. സാമൂഹിക പ്രതിബദ്ധതയോടെ, നാടിൻ്റെ നന്മയ്ക്കായി ഒരുമിച്ചു പ്രവർത്തിക്കാൻ ഞങ്ങൾ ലക്ഷ്യമിടുന്നു.
+                </p>
+            </div>
+        </section>
+
+        <!-- Activities Section -->
+        <section id="activities" class="py-20 bg-slate-800">
+            <div class="container mx-auto px-6 fade-in">
+                <h3 class="text-3xl font-bold mb-12 text-center text-cyan-400">പ്രധാന പ്രവർത്തനങ്ങൾ</h3>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <!-- Arts -->
+                    <div class="bg-slate-900 p-8 rounded-lg shadow-xl hover:shadow-cyan-500/20 transition-shadow duration-300">
+                        <h4 class="text-2xl font-bold mb-4 text-green-400">കല</h4>
+                        <ul class="space-y-3 text-slate-300 list-disc list-inside">
+                            <li>നാടകം, സംഗീത പരിപാടികൾ</li>
+                            <li>ചിത്രരചനാ മത്സരങ്ങൾ</li>
+                            <li>സാഹിത്യ കൂട്ടായ്മകൾ</li>
+                            <li>സാംസ്കാരിക സമ്മേളനങ്ങൾ</li>
+                        </ul>
+                    </div>
+                    <!-- Sports -->
+                    <div class="bg-slate-900 p-8 rounded-lg shadow-xl hover:shadow-cyan-500/20 transition-shadow duration-300">
+                        <h4 class="text-2xl font-bold mb-4 text-orange-400">കായികം</h4>
+                        <ul class="space-y-3 text-slate-300 list-disc list-inside">
+                            <li>ഫുട്ബോൾ, ക്രിക്കറ്റ്, വോളിബോൾ ടൂർണമെൻ്റുകൾ</li>
+                            <li>കബഡി, അത്‌ലറ്റിക്സ് മത്സരങ്ങൾ</li>
+                            <li>കായിക പരിശീലന ക്യാമ്പുകൾ</li>
+                            <li>ആരോഗ്യ ബോധവൽക്കരണ പരിപാടികൾ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-20 bg-slate-900">
+            <div class="container mx-auto px-6 text-center fade-in">
+                <h3 class="text-3xl font-bold mb-12 text-cyan-400">ഗാലറി</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <img src="https://placehold.co/400x300/334155/ffffff?text=ചിത്രം+1" alt="ഗാലറി ചിത്രം 1" class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/400x300/334155/ffffff?text=ചിത്രം+2" alt="ഗാലറി ചിത്രം 2" class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/400x300/334155/ffffff?text=ചിത്രം+3" alt="ഗാലറി ചിത്രം 3" class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/400x300/334155/ffffff?text=ചിത്രം+4" alt="ഗാലറി ചിത്രം 4" class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+                </div>
+                <a href="#" class="mt-8 inline-block bg-cyan-500 text-slate-900 font-bold py-3 px-6 rounded-lg hover:bg-cyan-400 transition-colors duration-300">കൂടുതൽ കാണുക</a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-slate-800">
+            <div class="container mx-auto px-6 text-center fade-in">
+                <h3 class="text-3xl font-bold mb-12 text-cyan-400">ബന്ധപ്പെടുക</h3>
+                <div class="max-w-md mx-auto bg-slate-900 p-8 rounded-lg shadow-xl">
+                    <div class="space-y-6 text-left">
                         <div class="flex items-center">
                             <svg class="w-6 h-6 mr-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span>യുനെസ്കോ ക്ലബ്, പിലാക്കോട്ടുപാടം, കരുളായി (പി.ഒ), മലപ്പുറം - 679332</span>
+                            <span>യുനെസ്കോ ക്ലബ്, പിലാക്കോട്ടുപാടം, ചോക്കാട് (പി.ഒ), മലപ്പുറം - 679332</span>
                         </div>
                         <div class="flex items-center">
                             <svg class="w-6 h-6 mr-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
@@ -20,7 +146,7 @@
     <!-- Footer -->
     <footer class="bg-slate-900 border-t border-slate-700 py-6">
         <div class="container mx-auto px-6 text-center text-slate-400">
-            <p>&copy; copyright@unesco club Karulai.</p>
+            <p>&copy; 2024 യുനെസ്കോ ആർട്സ് & സ്പോർട്സ് ക്ലബ്, പിലാക്കോട്ടുപാടം. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.</p>
         </div>
     </footer>
 
