@@ -25,6 +25,9 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .slide {
+            transition: opacity 1s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-white">
@@ -33,7 +36,7 @@
     <header class="bg-slate-800/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png" alt="Unesco Club Logo" class="h-12 mr-3">
+                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png?raw=true" alt="Unesco Club Logo" class="h-12 mr-3">
                 <h1 class="text-xl md:text-2xl font-bold text-cyan-400">യുനെസ്കോ ക്ലബ്</h1>
             </div>
             <nav class="hidden md:flex space-x-8">
@@ -67,6 +70,20 @@
                 <p class="mt-4 text-lg text-slate-200">കലയുടെയും കായികത്തിൻ്റെയും സൗഹൃദത്തിൻ്റെയും സംഗമസ്ഥാനം</p>
             </div>
         </section>
+
+        <!-- Slideshow Section -->
+        <section class="py-20 bg-slate-800">
+            <div class="container mx-auto px-6 text-center fade-in">
+                <h3 class="text-3xl font-bold mb-12 text-cyan-400">പ്രധാന നിമിഷങ്ങൾ</h3>
+                <div id="slideshow" class="relative w-full max-w-4xl mx-auto h-56 sm:h-72 md:h-96 overflow-hidden rounded-lg shadow-xl">
+                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/3%20cover.webp?raw=true" alt="Slideshow Image 1" class="slide absolute w-full h-full object-cover opacity-0">
+                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/6%20cover.webp?raw=true" alt="Slideshow Image 2" class="slide absolute w-full h-full object-cover opacity-0">
+                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/2%20cover.webp?raw=true" alt="Slideshow Image 3" class="slide absolute w-full h-full object-cover opacity-0">
+                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/1%20cover.webp?raw=true" alt="Slideshow Image 4" class="slide absolute w-full h-full object-cover opacity-0">
+                </div>
+            </div>
+        </section>
+
 
         <!-- About Us Section -->
         <section id="about" class="py-20 bg-slate-900">
@@ -119,7 +136,6 @@
                     <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/4%20cover.webp?raw=true" alt="ഗാലറി ചിത്രം 4" class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
                     <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/5%20cover.webp?raw=true" alt="ഗാലറി ചിത്രം 5" class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
                     <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/6%20cover.webp?raw=true" alt="ഗാലറി ചിത്രം 6" class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/c3bf4a30e3171f957700bdba430550a59adff6a8/unesco%20club%20logo.png?raw=true" alt="ഗാലറി ചിത്രം 7" class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
                 </div>
                 <a href="#" class="mt-8 inline-block bg-cyan-500 text-slate-900 font-bold py-3 px-6 rounded-lg hover:bg-cyan-400 transition-colors duration-300">കൂടുതൽ കാണുക</a>
             </div>
@@ -197,6 +213,26 @@
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
         });
+
+        // Slideshow logic
+        const slides = document.querySelectorAll('#slideshow .slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? '1' : '0';
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        if (slides.length > 0) {
+            showSlide(currentSlide);
+            setInterval(nextSlide, 4000); // Change image every 4 seconds
+        }
     </script>
 </body>
 </html>
