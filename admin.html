@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin-Panel Keralotsavam 2025 </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Malayalam:wght@756&display=swap" rel="stylesheet">
+    <!-- PDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body { font-family: 'Noto Serif Malayalam', serif; background-color: #f0f4f8; }
+        .tab-button.active { border-bottom-color: #3b82f6; color: #3b82f6; background-color: #eff6ff; }
+        .table-container { overflow-x: auto; max-height: 70vh; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px 12px; text-align: left; border: 1px solid #e2e8f0; white-space: nowrap; }
+        thead th { background-color: #f1f5f9; position: sticky; top: 0; z-index: 10; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center bg-gray-200">
+        <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
+            <img src="https://karulaipanchayatkeralotsavam.kesug.com/wp-content/uploads/2025/08/keral-logo-ty-1024x378.png" alt="Keralotsavam Logo" class="mx-auto mb-6 h-20">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Id</label>
+                    <input type="email" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <p id="login-error" class="text-red-500 text-sm"></p>
+                <button id="login-button" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Content -->
+    <div id="app-content" class="hidden container mx-auto p-4">
+        <header class="text-center mb-6 bg-white p-4 rounded-lg shadow-md flex justify-between items-center">
+            <h1 class="text-xl md:text-3xl font-bold text-blue-600">കരുളായി ഗ്രാമ പഞ്ചായത്ത് കേരളോത്സവം 2025</h1>
+            <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">ലോഗ്ഔട്ട്</button>
+        </header>
+
+        <!-- Tabs -->
+        <div class="mb-4 bg-white rounded-lg shadow-sm">
+            <div class="flex flex-wrap border-b">
+                <button class="tab-button flex-grow md:flex-1 py-3 px-2 font-semibold text-gray-600 active" onclick="switchView('data-entry')">ഡാറ്റ എൻട്രി</button>
+                <button class="tab-button flex-grow md:flex-1 py-3 px-2 font-semibold text-gray-600" onclick="switchView('athletics-sheet')">അത്‌ലറ്റിക്സ്</button>
+                <button class="tab-button flex-grow md:flex-1 py-3 px-2 font-semibold text-gray-600" onclick="switchView('arts-sheet')">ആർട്സ്</button>
+                <button class="tab-button flex-grow md:flex-1 py-3 px-2 font-semibold text-gray-600" onclick="switchView('leaderboard')">ലീഡർബോർഡ്</button>
+                <button class="tab-button flex-grow md:flex-1 py-3 px-2 font-semibold text-gray-600" onclick="switchView('dashboard')">ഡാഷ്‌ബോർഡ്</button>
+            </div>
+        </div>
+
+        <div id="views-container">
+            <!-- Data Entry View -->
+            <div id="data-entry" class="view-content bg-white p-6 rounded-lg shadow">
+                 <img src="https://karulaipanchayatkeralotsavam.kesug.com/wp-content/uploads/2025/08/keral-logo-ty-1024x378.png" alt="Keralotsavam Logo" class="mx-auto mb-4 h-24">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h2 class="text-xl font-bold mb-4 border-b pb-2">മത്സരഫലം ചേർക്കുക</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="clubName" class="block text-sm font-medium text-gray-700">ക്ലബ്ബ്:</label>
+                                <select id="clubName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></select>
+                            </div>
+                            <div>
+                                <label for="eventCategory" class="block text-sm font-medium text-gray-700">വിഭാഗം:</label>
+                                <select id="eventCategory" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    <option value="">-- തിരഞ്ഞെടുക്കുക --</option>
+                                    <option value="athletics">അത്‌ലറ്റിക്സ് & സ്പോർട്സ്</option>
+                                    <option value="arts">ആർട്സ് & നോൺ-സ്റ്റേജ്</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="eventName" class="block text-sm font-medium text-gray-700">മത്സരം:</label>
+                                <select id="eventName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <div id="points-section" class="hidden">
+                            <!-- Container for Arts Point Input -->
+                            <div id="arts-points" class="hidden p-6 border-2 border-dashed border-gray-300 rounded-lg bg-purple-50 flex flex-col items-center justify-center text-center">
+                                <h4 class="text-xl font-bold mb-4 text-purple-800">പോയിന്റ് ചേർക്കുക</h4>
+                                <div>
+                                    <label for="pointInput" class="block text-md font-medium text-gray-700 mb-2">ലഭിച്ച പോയിന്റ്:</label>
+                                    <input type="number" id="pointInput" class="w-40 text-center text-5xl font-bold p-3 rounded-lg border-2 border-purple-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-inner bg-white" placeholder="0">
+                                </div>
+                            </div>
+
+                            <!-- Containers for Athletics Checkboxes -->
+                            <div id="single-points" class="space-y-3 hidden p-4 border-2 border-dashed border-gray-300 rounded-lg bg-indigo-50">
+                                <h4 class="text-lg font-bold mb-3 text-indigo-800 border-b-2 border-indigo-200 pb-2">സിംഗിൾ ഇവന്റ്</h4>
+                                <label class="flex items-center cursor-pointer"><input type="checkbox" data-point="5" class="h-5 w-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500"> <span class="ml-3 text-gray-800">ഒന്നാം സ്ഥാനം (5 പോയിന്റ്)</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="checkbox" data-point="3" class="h-5 w-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500"> <span class="ml-3 text-gray-800">രണ്ടാം സ്ഥാനം (3 പോയിന്റ്)</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="checkbox" data-point="1" class="h-5 w-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500"> <span class="ml-3 text-gray-800">മൂന്നാം സ്ഥാനം (1 പോയിന്റ്)</span></label>
+                            </div>
+                            <div id="group-points" class="space-y-3 hidden p-4 border-2 border-dashed border-gray-300 rounded-lg bg-green-50">
+                                <h4 class="text-lg font-bold mb-3 text-green-800 border-b-2 border-green-200 pb-2">ഗ്രൂപ്പ് ഇവന്റ്</h4>
+                                <label class="flex items-center cursor-pointer"><input type="checkbox" data-point="10" class="h-5 w-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500"> <span class="ml-3 text-gray-800">ഒന്നാം സ്ഥാനം (10 പോയിന്റ്)</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="checkbox" data-point="6" class="h-5 w-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500"> <span class="ml-3 text-gray-800">രണ്ടാം സ്ഥാനം (6 പോയിന്റ്)</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="checkbox" data-point="2" class="h-5 w-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500"> <span class="ml-3 text-gray-800">മൂന്നാം സ്ഥാനം (2 പോയിന്റ്)</span></label>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex flex-wrap gap-3">
+                             <button id="submitBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300 disabled:opacity-50" disabled>സമർപ്പിക്കുക</button>
+                             <button id="finishEventBtn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition duration-300 disabled:opacity-50" disabled>മത്സരം കഴിഞ്ഞു</button>
+                             <button id="cancelBtn" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition duration-300 disabled:opacity-50" disabled>ക്യാൻസൽ</button>
+                             <button id="appealBtn" class="bg-yellow-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-yellow-600 transition duration-300 disabled:opacity-50" disabled>അപ്പീൽ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 pt-6 border-t">
+                    <h2 class="text-xl font-bold mb-4">അറിയിപ്പ് </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="announcementInput" class="block text-sm font-medium text-gray-700">അറിയിപ്പ് (ലീഡർബോർഡിൽ കാണിക്കാൻ):</label>
+                            <textarea id="announcementInput" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="ഇവിടെ അറിയിപ്പ് ടൈപ്പ് ചെയ്യുക..."></textarea>
+                        </div>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <button id="submitAnnouncementBtn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition duration-300">അറിയിപ്പ് സമർപ്പിക്കുക</button>
+                        </div>
+                    </div>
+                      <!-- Download Buttons Section -->
+                    <div class="mt-6 pt-4 border-t">
+                        <h3 class="text-lg font-semibold mb-3">റിപ്പോർട്ട് ഡൗൺലോഡ് </h3>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <button id="downloadLeaderboardBtn" class="bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition">ലീഡർബോർഡ്</button>
+                            <button id="downloadAthleticsPdfBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition">അത്‌ലറ്റിക്സ്</button>
+                            <button id="downloadArtsPdfBtn" class="bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition">ആർട്സ് </button>
+                            <button id="downloadCompletedBtn" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition">പൂർത്തിയായി</button>
+                            <button id="downloadPendingBtn" class="bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 transition">നടക്കാനുള്ളവ</button>
+                            <button id="downloadCancelledBtn" class="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition">ക്യാൻസൽ</button>
+                            <button id="downloadAppealBtn" class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-600 transition">അപ്പീൽ</button>
+                        </div>
+                    </div>
+                      <!-- New "Now Happening" Section -->
+                    <div class="mt-8 pt-6 border-t">
+                        <h2 class="text-xl font-bold mb-4 text-gray-800">ഇപ്പോൾ നടന്നു കൊണ്ടിരിക്കുന്ന മത്സരങ്ങൾ</h2>
+                        <div id="live-events-selector" class="p-4 bg-blue-50 rounded-lg shadow-inner max-h-96 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                            <!-- Checkboxes will be populated by JS -->
+                        </div>
+                        <div class="mt-4">
+                            <button id="saveLiveEventsBtn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition duration-300">
+                                ലൈവ് സ്റ്റാറ്റസ് സേവ് ചെയ്യുക
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div id="athletics-sheet" class="view-content hidden">
+                 <div class="bg-white p-4 rounded-lg shadow">
+                      <div class="flex justify-between items-center mb-4">
+                           <h2 class="text-2xl font-bold">അത്‌ലറ്റിക്സ് & സ്പോർട്സ്</h2>
+                           <button onclick="downloadPdf('athletics')" class="bg-teal-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-600 transition duration-300">PDF ഡൗൺലോഡ്</button>
+                     </div>
+                      <div id="athletics-table-container" class="table-container"></div>
+                 </div>
+            </div>
+            <div id="arts-sheet" class="view-content hidden">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold">ആർട്സ് & നോൺ-സ്റ്റേജ്</h2>
+                        <button onclick="downloadPdf('arts')" class="bg-teal-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-600 transition duration-300">PDF ഡൗൺലോഡ്</button>
+                    </div>
+                    <div id="arts-table-container" class="table-container"></div>
+                </div>
+            </div>
+            <!-- Leaderboard View -->
+            <div id="leaderboard" class="view-content hidden bg-white p-6 rounded-lg shadow text-center">
+                <h2 class="text-xl font-semibold text-center mb-4 text-gray-600 tracking-wider">പോയിന്റ് നില (ലീഡർബോർഡ്)</h2>
+                <div id="leaderboard-container">Loading...</div>
+            </div>
+            <!-- Dashboard View -->
+            <div id="dashboard" class="view-content hidden bg-white p-6 rounded-lg shadow">
+                <h2 class="text-2xl font-bold mb-4">ഡാഷ്‌ബോർഡ്</h2>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold mb-3">മത്സരങ്ങളുടെ നില</h3>
+                    <div id="overall-status" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center"></div>
+                </div>
+                <div id="dashboard-event-list" class="mt-6 bg-blue-50 p-4 rounded-lg shadow-inner hidden">
+                    <h4 id="event-list-title" class="text-lg font-bold mb-3 text-blue-800"></h4>
+                    <div id="event-list-content" class="max-h-60 overflow-y-auto"></div>
+                </div>
+                 <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-3">ക്ലബ്ബ് റിപ്പോർട്ട്</h3>
+                    <select id="dashboardClubSelect" class="block w-full md:w-1/2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        <option value="">-- ഒരു ക്ലബ്ബ് തിരഞ്ഞെടുക്കുക --</option>
+                    </select>
+                    <div id="club-report-container" class="mt-4 p-4 border rounded-lg bg-gray-50 min-h-[100px]">
+                       <p class="text-gray-500">ഒരു ക്ലബ്ബിന്റെ വിശദമായ റിപ്പോർട്ട് കാണാൻ മുകളിൽ നിന്നും തിരഞ്ഞെടുക്കുക.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc, writeBatch, getDocs } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGWjSR9o8-IheGk0V9HFsIYqnKXWpBiy8",
+            authDomain: "karulaipanchayatkeralosavam.firebaseapp.com",
+            databaseURL: "https://karulaipanchayatkeralosavam-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "karulaipanchayatkeralosavam",
+            storageBucket: "karulaipanchayatkeralotsavam.appspot.com",
+            messagingSenderId: "906167504851",
+            appId: "1:906167504851:web:a075af736e71ab3eede926"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const clubs = ["VICTORS PANCHAYATHUMPADI", "JUNIORS HIGH SCHOOL KUNNU", "RUBECON CHERUPUZHA", "YUVA STAR MUKKAM", "GSTAR MAILAMBARA", "SPARK PILAKKOTTUPADAM", "NAVA CHAITHANYA THAZHE PILAKOTUPADAM", "VASCO VARIKKAL", "VIVA CHALLENGERS PULLIYIL", "IDEAL VARAKULAM", "SEVAN STAR KARINTHAR", "UNESCO PILAKOTTUPADAM", "UDAYA CHETTIYIL", "MAS MAILAMBARA", "NATTUKKOOTTAM WHATSAPP  KOOTTAAYMA", "NEW BASK NEDUMKAYAM", "AIC AMBALAPADI", "YOUVA MARUTHANGADU", "IDENTITY KARLIKKODE", "SOUHRDHA NILAMPATHY", "NEW WELLDON MILLUMPADI"];
+        const events = {
+            athletics: [
+                { name: "100 M SENIOR BOYS", type: "single" }, { name: "200 M SENIOR BOYS", type: "single" },
+                { name: "400 M SENIOR BOYS", type: "single" }, { name: "800 M SENIOR BOYS", type: "single" },
+                { name: "1500 M SENIOR BOYS", type: "single" }, { name: "5000 M SENIOR BOYS", type: "single" },
+                { name: "4X100 M RELAY SENIOR BOYS", type: "group" }, { name: "SHOT PUT SENIOR BOYS", type: "single" },
+                { name: "DISCUS THROW SENIOR BOYS", type: "single" }, { name: "JAVELIN THROW SENIOR BOYS", type: "single" },
+                { name: "HIGH JUMB SENIOR BOYS", type: "single" }, { name: "LONG JUMB SENIOR BOYS", type: "single" },
+                { name: "TRIPLE JUMB SENIOR BOYS", type: "single" }, { name: "100 M SENIOR GIRLS", type: "single" },
+                { name: "200 M SENIOR GIRLS", type: "single" }, { name: "400 M SENIOR GIRLS", type: "single" },
+                { name: "800 M SENIOR GIRLS", type: "single" }, { name: "1500 M SENIOR GIRLS", type: "single" },
+                { name: "5000 M SENIOR GIRLS", type: "single" }, { name: "4X100 M RELAY SENIOR GIRLS", type: "group" }, 
+                { name: "SHOT PUT SENIOR GIRLS", type: "single" }, { name: "DISCUS THROW SENIOR GIRLS", type: "single" }, 
+                { name: "JAVELIN THROW SENIOR GIRLS", type: "single" }, { name: "HIGH JUMB SENIOR GIRLS", type: "single" }, 
+                { name: "LONG JUMB SENIOR GIRLS", type: "single" }, { name: "TRIPLE JUMB SENIOR GIRLS", type: "single" }, 
+                { name: "100 M MEN", type: "single" }, { name: "200 M MEN", type: "single" }, 
+                { name: "400 M MEN", type: "single" }, { name: "800 M MEN", type: "single" }, 
+                { name: "1500 M MEN", type: "single" }, { name: "5000 M MEN", type: "single" }, 
+                { name: "4X100 M RELAY MEN", type: "group" }, { name: "SHOT PUT MEN", type: "single" }, 
+                { name: "DISCUS THROW MEN", type: "single" }, { name: "JAVELIN THROW MEN", type: "single" }, 
+                { name: "HIGH JUMB MEN", type: "single" }, { name: "LONG JUMB MEN", type: "single" }, 
+                { name: "TRIPLE JUMB MEN", type: "single" }, { name: "100 M WOMEN", type: "single" }, 
+                { name: "200 M WOMEN", type: "single" }, { name: "400 M WOMEN", type: "single" }, 
+                { name: "800 M WOMEN", type: "single" }, { name: "1500 M WOMEN", type: "single" },
+                { name: "5000 M WOMEN", type: "single" }, { name: "4X100 M RELAY WOMEN", type: "group" },
+                { name: "SHOT PUT WOMEN", type: "single" }, { name: "DISCUS THROW WOMEN", type: "single" },
+                { name: "JAVELIN THROW WOMEN", type: "single" }, { name: "HIGH JUMB WOMEN", type: "single" },
+                { name: "LONG JUMB WOMEN", type: "single" }, { name: "TRIPLE JUMB WOMEN", type: "single" },
+                { name: "BADMINTON MEN", type: "single" }, { name: "BADMINTON (DOUBLES) MEN", type: "group" }, 
+                { name: "BADMINTON WOMEN", type: "single" }, { name: "BADMINTON (DOUBLES) WOMEN", type: "group" }, 
+                { name: "CRICKET", type: "group" }, { name: "VOLLEYBALL", type: "group" }, 
+                { name: "FOOTBALL", type: "group" }
+            ],
+            arts: [
+                { name: "Mehendi", type: "group" }, { name: "Upanyasa rachana", type: "single" },
+                { name: "Kavitha rachana", type: "single" }, { name: "Katha rachana", type: "single" },
+                { name: "Chithra rachana", type: "single" }, { name: "Cartoon", type: "single" },
+                { name: "Quiz", type: "single" }, { name: "Kaliman Shilpa Nirmmanam", type: "single" },
+                { name: "Flower Arrangement", type: "single" }, { name: "Lalitha Gaanam (Men)", type: "single" },
+                { name: "Lalitha Gaanam (Vanitha)", type: "single" }, { name: "Mappilappattu", type: "single" }, 
+                { name: "Naadodippattu", type: "single" }, { name: "Kavithaalapanam", type: "single" }, 
+                { name: "Sanghaganam", type: "group" }, { name: "Deshabhakthi ganam", type: "group" }, 
+                { name: "Naadodi Nritham (Single)", type: "single" }, { name: "Violin", type: "single" },
+                { name: "Chenda", type: "single" }, { name: "Ekanka Naadakam", type: "group" }, 
+                { name: "Mono Act", type: "single" }, { name: "Mimicry", type: "single" }, 
+                { name: "Prasangam (Malayalam)", type: "single" }, { name: "Kolkali", type: "group" }, 
+                { name: "Duff Muttu", type: "group" }, { name: "Mohiniyattam (Vanitha)", type: "single" }, 
+                { name: "Thiruvathira (Vanitha)", type: "group" }, { name: "Margamkali (Vanitha)", type: "group" },
+                { name: "Oppana (Vanitha)", type: "group" }, { name: "Sanghanritham (Vanitha)", type: "group" }
+            ]
+        };
+
+        const orderedEventNames = [
+            "100 M SENIOR BOYS", "200 M SENIOR BOYS", "400 M SENIOR BOYS", "800 M SENIOR BOYS", "1500 M SENIOR BOYS", "5000 M SENIOR BOYS", "4X100 M RELAY SENIOR BOYS", "SHOT PUT SENIOR BOYS", "DISCUS THROW SENIOR BOYS", "JAVELIN THROW SENIOR BOYS", "HIGH JUMB SENIOR BOYS", "LONG JUMB SENIOR BOYS", "TRIPLE JUMB SENIOR BOYS", "100 M SENIOR GIRLS", "200 M SENIOR GIRLS", "400 M SENIOR GIRLS", "800 M SENIOR GIRLS", "1500 M SENIOR GIRLS", "5000 M SENIOR GIRLS", "4X100 M RELAY SENIOR GIRLS", "SHOT PUT SENIOR GIRLS", "DISCUS THROW SENIOR GIRLS", "JAVELIN THROW SENIOR GIRLS", "HIGH JUMB SENIOR GIRLS", "LONG JUMB SENIOR GIRLS", "TRIPLE JUMB SENIOR GIRLS", "100 M MEN", "200 M MEN", "400 M MEN", "800 M MEN", "1500 M MEN", "5000 M MEN", "4X100 M RELAY MEN", "SHOT PUT MEN", "DISCUS THROW MEN", "JAVELIN THROW MEN", "HIGH JUMB MEN", "LONG JUMB MEN", "TRIPLE JUMB MEN", "100 M WOMEN", "200 M WOMEN", "400 M WOMEN", "800 M WOMEN", "1500 M WOMEN", "5000 M WOMEN", "4X100 M RELAY WOMEN", "SHOT PUT WOMEN", "DISCUS THROW WOMEN", "JAVELIN THROW WOMEN", "HIGH JUMB WOMEN", "LONG JUMB WOMEN", "TRIPLE JUMB WOMEN", "BADMINTON MEN", "BADMINTON (DOUBLES) MEN", "BADMINTON WOMEN", "BADMINTON (DOUBLES) WOMEN", "CRICKET", "VOLLEYBALL", "FOOTBALL",
+            "Mehendi", "Upanyasa rachana", "Kavitha rachana", "Katha rachana", "Chithra rachana", "Cartoon", "Quiz", "Kaliman Shilpa Nirmmanam", "Flower Arrangement", "Lalitha Gaanam (Men)", "Lalitha Gaanam (Vanitha)", "Mappilappattu", "Naadodippattu", "Kavithaalapanam", "Sanghaganam", "Deshabhakthi ganam", "Naadodi Nritham (Single)", "Violin", "Chenda", "Ekanka Naadakam", "Mono Act", "Mimicry", "Prasangam (Malayalam)", "Kolkali", "Duff Muttu", "Mohiniyattam (Vanitha)", "Thiruvathira (Vanitha)", "Margamkali (Vanitha)", "Oppana (Vanitha)", "Sanghanritham (Vanitha)"
+        ];
+        
+        const totalEvents = orderedEventNames.length;
+        let scores = {};
+        let eventStatuses = {};
+        let liveEvents = [];
+
+        const loginScreen = document.getElementById('login-screen');
+        const appContent = document.getElementById('app-content');
+        const loginButton = document.getElementById('login-button');
+        const logoutButton = document.getElementById('logout-button');
+        const loginError = document.getElementById('login-error');
+
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                loginScreen.classList.add('hidden');
+                appContent.classList.remove('hidden');
+                setupListeners();
+            } else {
+                loginScreen.classList.remove('hidden');
+                appContent.classList.add('hidden');
+            }
+        });
+
+        loginButton.addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            loginError.textContent = '';
+            signInWithEmailAndPassword(auth, email, password)
+                .catch(error => {
+                    loginError.textContent = 'ലോഗിൻ വിവരങ്ങൾ ശരിയല്ല.';
+                    console.error("Login Error:", error);
+                });
+        });
+
+        logoutButton.addEventListener('click', () => signOut(auth));
+
+        function setupListeners() {
+            onSnapshot(collection(db, "scores"), (snapshot) => {
+                 clubs.forEach(club => { scores[club] = {}; });
+                 snapshot.forEach(doc => { scores[doc.id] = doc.data(); });
+                 refreshAllViews();
+            });
+
+            onSnapshot(doc(db, "eventStatuses", "current"), (doc) => {
+                eventStatuses = doc.exists() ? doc.data() : {};
+                updateEventNameDropdown(); 
+                refreshAllViews();
+            });
+
+            onSnapshot(doc(db, "liveStatus", "nowHappening"), (doc) => {
+                liveEvents = doc.exists() ? doc.data().events || [] : [];
+                renderLiveEventsSelector();
+            });
+        }
+
+        async function updateScore(clubName, eventName, totalPoints) {
+            const scoreRef = doc(db, 'scores', clubName);
+            await setDoc(scoreRef, { [eventName]: totalPoints }, { merge: true });
+        }
+
+        async function updateEventStatus(eventName, newStatus) {
+            const statusRef = doc(db, 'eventStatuses', 'current');
+            await setDoc(statusRef, { [eventName]: newStatus }, { merge: true });
+        }
+        
+        async function postAnnouncement(text) {
+             const announcementRef = doc(db, 'announcements', 'latest');
+             await setDoc(announcementRef, { text: text, timestamp: new Date() });
+        }
+
+        async function updateLiveEvents(eventsArray) {
+            const liveRef = doc(db, 'liveStatus', 'nowHappening');
+            await setDoc(liveRef, { events: eventsArray });
+        }
+
+        window.switchView = function(viewId) {
+            document.querySelectorAll('.view-content').forEach(view => view.classList.add('hidden'));
+            document.getElementById(viewId).classList.remove('hidden');
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+            document.querySelector(`.tab-button[onclick="switchView('${viewId}')"]`).classList.add('active');
+            if (viewId === 'leaderboard') renderLeaderboard();
+        }
+        
+        async function handleSubmit() {
+            const clubName = document.getElementById('clubName').value;
+            const eventName = document.getElementById('eventName').value;
+            const category = document.getElementById('eventCategory').value;
+            if (!clubName || !eventName) return;
+
+            let totalPoints = 0;
+
+            if (category === 'arts') {
+                const pointValue = document.getElementById('pointInput').value;
+                totalPoints = parseInt(pointValue) || 0;
+            } else if (category === 'athletics') {
+                document.querySelectorAll('#points-section input[type="checkbox"]:checked').forEach(cb => {
+                    totalPoints += parseInt(cb.getAttribute('data-point'));
+                });
+            }
+            
+            await updateScore(clubName, eventName, totalPoints);
+            
+            alert(`${clubName}-ന് ${eventName}-ൽ ${totalPoints} പോയിന്റ് ചേർത്തു.`);
+            resetForm();
+        }
+        
+        async function handleEventStatusUpdate(newStatus) {
+            const eventName = document.getElementById('eventName').value;
+            if (!eventName) return;
+
+            // Update the event's main status
+            await updateEventStatus(eventName, newStatus);
+
+            // If the event is now finished (completed or cancelled), also remove it from the live list
+            if ((newStatus === 'completed' || newStatus === 'cancelled') && liveEvents.includes(eventName)) {
+                const updatedLiveEvents = liveEvents.filter(e => e !== eventName);
+                await updateLiveEvents(updatedLiveEvents);
+            }
+            
+            alert(`'${eventName}' എന്ന മത്സരം '${newStatus}' ആയി അടയാളപ്പെടുത്തി.`);
+            resetForm();
+        }
+
+
+        function populateDropdowns() {
+            const clubSelects = [document.getElementById('clubName'), document.getElementById('dashboardClubSelect')];
+            clubSelects.forEach(select => {
+                select.innerHTML = '';
+                if(select.id === 'dashboardClubSelect' || select.id === 'clubName') {
+                     select.innerHTML = '<option value="">-- ഒരു ക്ലബ്ബ് തിരഞ്ഞെടുക്കുക --</option>';
+                }
+                clubs.forEach(club => {
+                    select.innerHTML += `<option value="${club}">${club}</option>`;
+                });
+            });
+        }
+    
+        function updateEventNameDropdown() {
+            const category = document.getElementById('eventCategory').value;
+            const eventNameSelect = document.getElementById('eventName');
+            const selectedEvent = eventNameSelect.value; 
+            eventNameSelect.innerHTML = '<option value="">-- മത്സരം തിരഞ്ഞെടുക്കുക --</option>';
+            document.getElementById('points-section').classList.add('hidden');
+            ['submitBtn', 'cancelBtn', 'appealBtn', 'finishEventBtn'].forEach(id => document.getElementById(id).disabled = true);
+
+            if (category && events[category]) {
+                events[category].forEach(event => {
+                    const status = eventStatuses[event.name];
+                    const isDisabled = status === 'completed' || status === 'cancelled' || status === 'appeal';
+                    const disabledAttr = isDisabled ? 'disabled' : '';
+                    const styleAttr = isDisabled ? 'style="color: #9ca3af;"' : '';
+                    eventNameSelect.innerHTML += `<option value="${event.name}" ${disabledAttr} ${styleAttr}>${event.name}</option>`;
+                });
+            }
+            eventNameSelect.value = selectedEvent; 
+        }
+
+        function handleEventNameChange() {
+            const category = document.getElementById('eventCategory').value;
+            const eventName = document.getElementById('eventName').value;
+            const pointsSection = document.getElementById('points-section');
+            
+            const singlePointsDiv = document.getElementById('single-points');
+            const groupPointsDiv = document.getElementById('group-points');
+            const artsPointsDiv = document.getElementById('arts-points');
+
+            // Reset and hide all point entry sections
+            document.querySelectorAll('#points-section input').forEach(input => {
+                if(input.type === 'checkbox') input.checked = false;
+                if(input.type === 'number') input.value = '';
+            });
+            singlePointsDiv.classList.add('hidden');
+            groupPointsDiv.classList.add('hidden');
+            artsPointsDiv.classList.add('hidden');
+
+            ['submitBtn', 'cancelBtn', 'appealBtn', 'finishEventBtn'].forEach(id => document.getElementById(id).disabled = !eventName);
+
+            if (eventName) {
+                pointsSection.classList.remove('hidden');
+                
+                if (category === 'arts') {
+                    artsPointsDiv.classList.remove('hidden');
+                } else if (category === 'athletics') {
+                    const eventObj = events[category].find(e => e.name === eventName);
+                    if (eventObj.type === 'single') {
+                        singlePointsDiv.classList.remove('hidden');
+                    } else {
+                        groupPointsDiv.classList.remove('hidden');
+                    }
+                }
+            } else {
+                pointsSection.classList.add('hidden');
+            }
+        }
+    
+        function getStatusIcon(eventName) {
+            switch(eventStatuses[eventName]) {
+                case 'completed': return '✅';
+                case 'cancelled': return '❌';
+                case 'appeal': return '⚠️';
+                default: return '';
+            }
+        }
+
+        function renderScoresTable(category) {
+            const container = document.getElementById(`${category}-table-container`);
+            const eventList = events[category];
+            let tableHTML = '<table><thead><tr><th>Sl.No</th><th>ക്ലബ്ബിന്റെ പേര്</th>';
+            eventList.forEach(event => { tableHTML += `<th>${event.name} <span class="status-icon">${getStatusIcon(event.name)}</span></th>`; });
+            tableHTML += `<th>ആകെ പോയിന്റ്</th>`;
+            if (category === 'arts') tableHTML += `<th>ഗ്രാൻഡ് ടോട്ടൽ</th>`;
+            tableHTML += '</tr></thead><tbody>';
+
+            clubs.forEach((club, index) => {
+                let totalPoints = 0;
+                tableHTML += `<tr><td>${index + 1}</td><td>${club}</td>`;
+                eventList.forEach(event => {
+                    const point = scores[club]?.[event.name] || 0;
+                    totalPoints += point;
+                    tableHTML += `<td>${point}</td>`;
+                });
+                tableHTML += `<td class="font-bold">${totalPoints}</td>`;
+                if (category === 'arts') {
+                    let sportsTotal = 0;
+                    events.athletics.forEach(event => sportsTotal += scores[club]?.[event.name] || 0);
+                    tableHTML += `<td class="font-bold text-blue-600">${totalPoints + sportsTotal}</td>`;
+                }
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+            container.innerHTML = tableHTML;
+        }
+
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboard-container');
+            let leaderboardData = clubs.map(club => {
+                let total = 0;
+                if(scores[club]) Object.values(scores[club]).forEach(point => total += point);
+                return { name: club, total: total };
+            });
+            leaderboardData.sort((a, b) => b.total - a.total);
+            
+            let tableHTML = `<div class="overflow-x-auto hidden md:block"><table class="w-full text-lg border-separate border-spacing-y-2"><thead><tr><th class="p-3 text-left text-sm font-bold uppercase text-white bg-gradient-to-r from-blue-600 to-indigo-500 rounded-l-lg">റാങ്ക്</th><th class="p-3 text-left text-sm font-bold uppercase text-white bg-gradient-to-r from-indigo-500 to-indigo-500">ക്ലബ്ബിന്റെ പേര്</th><th class="p-3 text-center text-sm font-bold uppercase text-white bg-gradient-to-r from-indigo-500 to-indigo-500">പോയിന്റ്</th><th class="p-3 text-center text-sm font-bold uppercase text-white bg-gradient-to-r from-indigo-500 to-blue-600 rounded-r-lg">മെഡൽ</th></tr></thead><tbody>`;
+            leaderboardData.forEach((item, index) => {
+                const rank = index + 1;
+                let medal = ''; let rowClass = 'bg-white shadow rounded-lg'; let textClass = 'text-gray-800'; let pointClass = 'text-blue-700';
+                if (rank === 1) { medal = '🥇'; rowClass = 'bg-yellow-100 border-l-4 border-yellow-500 shadow-lg'; textClass = 'text-yellow-900 font-bold'; pointClass = 'text-yellow-700'; } 
+                else if (rank === 2) { medal = '🥈'; rowClass = 'bg-gray-100 border-l-4 border-gray-400 shadow-lg'; textClass = 'text-gray-900 font-bold'; pointClass = 'text-gray-700'; } 
+                else if (rank === 3) { medal = '🥉'; rowClass = 'bg-orange-100 border-l-4 border-orange-500 shadow-lg'; textClass = 'text-orange-900 font-bold'; pointClass = 'text-orange-700'; }
+                tableHTML += `<tr class="${rowClass}"><td class="p-4 text-center font-bold text-lg ${textClass} rounded-l-lg">${rank}</td><td class="p-4 font-semibold ${textClass}">${item.name}</td><td class="p-4 text-center font-bold text-lg ${pointClass}">${item.total}</td><td class="p-4 text-center text-3xl rounded-r-lg">${medal}</td></tr>`;
+            });
+            tableHTML += '</tbody></table></div>';
+
+            let cardsHTML = '<div class="space-y-3 md:hidden">';
+            leaderboardData.forEach((item, index) => {
+                const rank = index + 1;
+                let medal = ''; let cardClass = 'bg-white shadow-md rounded-lg'; let rankClass = 'bg-gray-200 text-gray-800';
+                if (rank === 1) { medal = '🥇'; cardClass = 'bg-yellow-50 shadow-lg rounded-lg border-2 border-yellow-400'; rankClass = 'bg-yellow-400 text-white'; }
+                else if (rank === 2) { medal = '🥈'; cardClass = 'bg-gray-50 shadow-lg rounded-lg border-2 border-gray-300'; rankClass = 'bg-gray-300 text-gray-800'; }
+                else if (rank === 3) { medal = '🥉'; cardClass = 'bg-orange-50 shadow-lg rounded-lg border-2 border-orange-400'; rankClass = 'bg-orange-400 text-white'; }
+                cardsHTML += `<div class="${cardClass} p-3 flex items-center justify-between"><div class="flex items-center"><div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full ${rankClass} font-bold text-lg">${rank}</div><span class="ml-3 font-semibold text-gray-700 text-left">${item.name}</span></div><div class="text-right"><div class="font-bold text-lg text-blue-600">${item.total} pts</div><div class="text-2xl mt-1">${medal}</div></div></div>`;
+            });
+            cardsHTML += '</div>';
+            container.innerHTML = tableHTML + cardsHTML;
+        }
+
+        function renderLiveEventsSelector() {
+            const container = document.getElementById('live-events-selector');
+            if (!container) return;
+            let contentHTML = '';
+            orderedEventNames.forEach(eventName => {
+                const status = eventStatuses[eventName];
+                const isFinished = status === 'completed' || status === 'cancelled';
+                const isChecked = liveEvents.includes(eventName);
+
+                contentHTML += `
+                    <label class="flex items-center p-2 rounded-md transition-colors duration-200 ${isFinished ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white hover:bg-blue-100 cursor-pointer'}">
+                        <input type="checkbox" value="${eventName}" class="live-event-checkbox h-5 w-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500" ${isChecked ? 'checked' : ''} ${isFinished ? 'disabled' : ''}>
+                        <span class="ml-3 text-sm ${isFinished ? 'line-through' : ''}">${eventName}</span>
+                    </label>
+                `;
+            });
+            container.innerHTML = contentHTML;
+        }
+
+        function showEventListByStatus(status) {
+            const listContainer = document.getElementById('dashboard-event-list');
+            const titleEl = document.getElementById('event-list-title');
+            const contentEl = document.getElementById('event-list-content');
+            
+            const statusMap = {
+                completed: 'പൂർത്തിയായ മത്സരങ്ങൾ',
+                pending: 'നടക്കാനുള്ള മത്സരങ്ങൾ',
+                cancelled: 'ക്യാൻസൽ ചെയ്ത മത്സരങ്ങൾ',
+                appeal: 'അപ്പീൽ വന്ന മത്സരങ്ങൾ'
+            };
+
+            titleEl.textContent = statusMap[status];
+            
+            let filteredEvents = [];
+            if (status === 'pending') {
+                filteredEvents = orderedEventNames.filter(eventName => !eventStatuses[eventName] || eventStatuses[eventName] === 'pending');
+            } else {
+                filteredEvents = orderedEventNames.filter(eventName => eventStatuses[eventName] === status);
+            }
+            
+            if (filteredEvents.length > 0) {
+                let listHTML = '<ol class="list-decimal list-inside space-y-1">';
+                filteredEvents.forEach(eventName => { listHTML += `<li>${eventName}</li>`; });
+                listHTML += '</ol>';
+                contentEl.innerHTML = listHTML;
+            } else {
+                contentEl.innerHTML = '<p class="text-gray-500">ഈ വിഭാഗത്തിൽ മത്സരങ്ങളില്ല.</p>';
+            }
+            listContainer.classList.remove('hidden');
+        }
+        
+        window.showEventListByStatus = showEventListByStatus;
+
+        function renderDashboardStatus() {
+            let completed = 0, cancelled = 0, appeal = 0;
+            let processed = 0;
+            if(eventStatuses) {
+                Object.values(eventStatuses).forEach(status => {
+                    if (status === 'completed') completed++;
+                    else if (status === 'cancelled') cancelled++;
+                    else if (status === 'appeal') appeal++;
+                    if (status && status !== 'pending') processed++;
+                });
+            }
+            let pending = totalEvents - processed;
+            
+            const statusHTML = `<button onclick="showEventListByStatus('completed')" class="p-4 bg-green-100 rounded-lg text-left"><div class="text-2xl font-bold">${completed}</div><div class="text-sm text-green-800">പൂർത്തിയായി (✅)</div></button>
+                                  <button onclick="showEventListByStatus('pending')" class="p-4 bg-gray-200 rounded-lg text-left"><div class="text-2xl font-bold">${pending}</div><div class="text-sm text-gray-800">നടക്കാനുള്ളവ</div></button>
+                                  <button onclick="showEventListByStatus('cancelled')" class="p-4 bg-red-100 rounded-lg text-left"><div class="text-2xl font-bold">${cancelled}</div><div class="text-sm text-red-800">ക്യാൻസൽ (❌)</div></button>
+                                  <button onclick="showEventListByStatus('appeal')" class="p-4 bg-yellow-100 rounded-lg text-left"><div class="text-2xl font-bold">${appeal}</div><div class="text-sm text-yellow-800">അപ്പീൽ (⚠️)</div></button>`;
+            document.getElementById('overall-status').innerHTML = statusHTML;
+        }
+
+        function renderClubReport() {
+            const clubName = document.getElementById('dashboardClubSelect').value;
+            const container = document.getElementById('club-report-container');
+
+            if (!clubName) {
+                container.innerHTML = '<p class="text-gray-500">ഒരു ക്ലബ്ബിന്റെ വിശദമായ റിപ്പോർട്ട് കാണാൻ മുകളിൽ നിന്നും തിരഞ്ഞെടുക്കുക.</p>';
+                return;
+            }
+            
+            let reportHTML = `<h4 class="text-lg font-bold mb-2 text-blue-700">${clubName}</h4>`;
+            let totalPoints = 0;
+            const clubScores = scores[clubName] || {};
+            
+            reportHTML += '<div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">';
+            
+            reportHTML += '<div><h5 class="font-semibold mb-2">ലഭിച്ച പോയിന്റുകൾ:</h5><ul class="list-disc list-inside space-y-1 text-sm">';
+            let hasPoints = false;
+            Object.keys(clubScores).sort().forEach(eventName => {
+                 if (clubScores[eventName] > 0) {
+                     reportHTML += `<li>${eventName}: <span class="font-bold">${clubScores[eventName]}</span> പോയിന്റ്</li>`;
+                     totalPoints += clubScores[eventName];
+                     hasPoints = true;
+                 }
+            });
+            if (!hasPoints) reportHTML += '<li>പോയിന്റുകൾ ലഭിച്ചിട്ടില്ല.</li>';
+            reportHTML += `</ul></div>`;
+
+            const cancelledEvents = Object.entries(eventStatuses).filter(([,s]) => s === 'cancelled').map(([e]) => e);
+            const appealedEvents = Object.entries(eventStatuses).filter(([,s]) => s === 'appeal').map(([e]) => e);
+            
+            let statusHTML = '<div>';
+            if(cancelledEvents.length > 0) statusHTML += `<div class="mb-2"><h5 class="font-semibold">ക്യാൻസൽ ചെയ്തവ:</h5><p class="text-sm">${cancelledEvents.join(', ')}</p></div>`;
+            if(appealedEvents.length > 0) statusHTML += `<div><h5 class="font-semibold">അപ്പീൽ വന്നവ:</h5><p class="text-sm">${appealedEvents.join(', ')}</p></div>`;
+            statusHTML += '</div>';
+
+            reportHTML += statusHTML;
+            reportHTML += '</div>';
+
+            reportHTML += `<div class="mt-4 pt-4 border-t font-bold text-lg">ആകെ പോയിന്റ്: <span class="text-indigo-600">${totalPoints}</span></div>`;
+            reportHTML += `<div class="mt-4"><button onclick="downloadClubReportPdf('${clubName}')" class="bg-cyan-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-cyan-700 transition">റിപ്പോർട്ട് PDF ഡൗൺലോഡ്</button></div>`;
+            
+            container.innerHTML = reportHTML;
+        }
+        
+        window.downloadPdf = function(category) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a3' });
+            const pdfTitle = category === 'athletics' ? 'Karulai Grama Panchayat Keralolsavam 2025 - Athletics & Sports' : 'Karulai Grama Panchayat Keralolsavam 2025 - Arts & Non-stage';
+            const filename = category === 'athletics' ? 'athletics_scores.pdf' : 'arts_scores.pdf';
+            const eventList = events[category];
+            doc.setFontSize(18);
+            doc.text(pdfTitle, 14, 22);
+            const head = [['Sl.No', 'Club Name']];
+            eventList.forEach(event => head[0].push(event.name));
+            head[0].push('Total');
+            if (category === 'arts') head[0].push('Grand Total');
+            const body = [];
+            clubs.forEach((club, index) => {
+                const row = [index + 1, club];
+                let categoryTotal = 0;
+                eventList.forEach(event => {
+                    const point = scores[club]?.[event.name] || 0;
+                    categoryTotal += point;
+                    row.push(point.toString());
+                });
+                row.push(categoryTotal.toString());
+                if (category === 'arts') {
+                    let sportsTotal = 0;
+                    events.athletics.forEach(event => sportsTotal += scores[club]?.[event.name] || 0);
+                    row.push((categoryTotal + sportsTotal).toString());
+                }
+                body.push(row);
+            });
+            doc.autoTable({
+                head: head, body: body, startY: 30, theme: 'grid',
+                headStyles: { fillColor: [22, 160, 133], fontSize: 6 },
+                styles: { fontSize: 7, cellPadding: 1 },
+                columnStyles: { 1: { cellWidth: 40, halign: 'left' } }
+            });
+            doc.save(filename);
+        }
+
+        window.downloadLeaderboardPdf = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(18);
+            doc.text('Karulai Grama Panchayat Keralolsavam 2025', doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+            doc.setFontSize(14);
+            doc.text('Leaderboard', doc.internal.pageSize.getWidth() / 2, 28, { align: 'center' });
+            const head = [['Rank', 'Club Name', 'Points']];
+            const body = [];
+            let leaderboardData = clubs.map(club => {
+                let total = 0;
+                if(scores[club]) Object.values(scores[club]).forEach(point => total += point);
+                return { name: club, total: total };
+            }).sort((a,b) => b.total - a.total);
+            leaderboardData.forEach((item, index) => { body.push([index + 1, item.name, item.total]); });
+            doc.autoTable({
+                head: head, body: body, startY: 35, theme: 'grid',
+                headStyles: { fillColor: [44, 62, 80] }
+            });
+            doc.save('leaderboard.pdf');
+        }
+
+        window.downloadClubReportPdf = function(clubName) {
+            if (!clubName) return;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const clubScores = scores[clubName] || {};
+            let totalPoints = 0;
+            const pointsBody = [];
+            Object.keys(clubScores).sort().forEach(eventName => {
+                if (clubScores[eventName] > 0) {
+                    pointsBody.push([eventName, clubScores[eventName].toString()]);
+                    totalPoints += clubScores[eventName];
+                }
+            });
+            doc.setFontSize(18);
+            doc.text('Karulai Grama Panchayat Keralolsavam 2025', 105, 20, { align: 'center' });
+            doc.setFontSize(14);
+            doc.text(`Club Report: ${clubName}`, 105, 28, { align: 'center' });
+            let finalY = 35;
+            if (pointsBody.length > 0) {
+                doc.autoTable({ head: [['Event Name', 'Points']], body: pointsBody, startY: finalY });
+                finalY = doc.autoTable.previous.finalY;
+            } else {
+                doc.setFontSize(10);
+                doc.text('No points scored yet.', 14, finalY + 5);
+                finalY += 10;
+            }
+            const cancelledEvents = Object.entries(eventStatuses).filter(([,s]) => s === 'cancelled').map(([e]) => e);
+            const appealedEvents = Object.entries(eventStatuses).filter(([,s]) => s === 'appeal').map(([e]) => e);
+            if(cancelledEvents.length > 0 || appealedEvents.length > 0) finalY += 10;
+            if(cancelledEvents.length > 0) { doc.text('Cancelled Events:', 14, finalY); doc.text(cancelledEvents.join(', '), 14, finalY + 5, {maxWidth: 180}); finalY += 15; }
+            if(appealedEvents.length > 0) { doc.text('Appealed Events:', 14, finalY); doc.text(appealedEvents.join(', '), 14, finalY + 5, {maxWidth: 180}); finalY += 15; }
+
+            doc.setFont(undefined, 'bold');
+            doc.text(`Total Points: ${totalPoints}`, 14, finalY + 10);
+            doc.save(`${clubName.replace(/\s+/g, '_')}_report.pdf`);
+        }
+        
+        function downloadStatusReportPdf(status) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const statusMap = {
+                completed: 'പൂർത്തിയായ മത്സരങ്ങൾ',
+                pending: 'നടക്കാനുള്ള മത്സരങ്ങൾ',
+                cancelled: 'ക്യാൻസൽ ചെയ്ത മത്സരങ്ങൾ',
+                appeal: 'അപ്പീൽ വന്ന മത്സരങ്ങൾ'
+            };
+            const title = statusMap[status] || 'Event Report';
+
+            doc.setFontSize(18);
+            doc.text('Karulai Grama Panchayat Keralolsavam 2025', doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+            doc.setFontSize(14);
+            doc.text(title, doc.internal.pageSize.getWidth() / 2, 28, { align: 'center' });
+
+            let filteredEvents = [];
+            if (status === 'pending') {
+                filteredEvents = orderedEventNames.filter(eventName => !eventStatuses[eventName] || eventStatuses[eventName] === 'pending');
+            } else {
+                filteredEvents = orderedEventNames.filter(eventName => eventStatuses[eventName] === status);
+            }
+
+            if (filteredEvents.length > 0) {
+                const body = filteredEvents.map((eventName, index) => [index + 1, eventName]);
+                doc.autoTable({
+                    head: [['No.', 'മത്സരത്തിന്റെ പേര്']],
+                    body: body,
+                    startY: 35,
+                    theme: 'grid',
+                    headStyles: { fillColor: [44, 62, 80] }
+                });
+            } else {
+                doc.setFontSize(12);
+                doc.text('ഈ വിഭാഗത്തിൽ മത്സരങ്ങളില്ല.', 14, 40);
+            }
+
+            doc.save(`${status}_report.pdf`);
+        }
+
+        function resetForm() {
+            document.getElementById('clubName').value = "";
+            document.getElementById('eventCategory').value = "";
+            updateEventNameDropdown();
+            handleEventNameChange();
+        }
+
+        function refreshAllViews() {
+            renderScoresTable('athletics');
+            renderScoresTable('arts');
+            renderDashboardStatus();
+            renderClubReport();
+            renderLiveEventsSelector();
+            if (!document.getElementById('leaderboard').classList.contains('hidden')) {
+                renderLeaderboard();
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDropdowns();
+            updateEventNameDropdown();
+            renderLiveEventsSelector();
+
+            document.getElementById('eventCategory').addEventListener('change', () => {
+                updateEventNameDropdown();
+                handleEventNameChange();
+            });
+            
+            document.getElementById('eventName').addEventListener('change', handleEventNameChange);
+
+            document.getElementById('submitBtn').addEventListener('click', handleSubmit);
+            document.getElementById('finishEventBtn').addEventListener('click', () => handleEventStatusUpdate('completed'));
+            document.getElementById('cancelBtn').addEventListener('click', () => handleEventStatusUpdate('cancelled'));
+            document.getElementById('appealBtn').addEventListener('click', () => handleEventStatusUpdate('appeal'));
+            document.getElementById('dashboardClubSelect').addEventListener('change', renderClubReport);
+            document.getElementById('submitAnnouncementBtn').addEventListener('click', async () => {
+                const text = document.getElementById('announcementInput').value.trim();
+                await postAnnouncement(text);
+                alert(text ? 'അറിയിപ്പ് സമർപ്പിച്ചു.' : 'അറിയിപ്പ് നീക്കം ചെയ്തു.');
+                document.getElementById('announcementInput').value = '';
+            });
+
+            document.getElementById('saveLiveEventsBtn').addEventListener('click', async () => {
+                const selectedEvents = [];
+                document.querySelectorAll('.live-event-checkbox:checked').forEach(checkbox => {
+                    selectedEvents.push(checkbox.value);
+                });
+                await updateLiveEvents(selectedEvents);
+                alert('ലൈവ് മത്സരങ്ങളുടെ ലിസ്റ്റ് അപ്ഡേറ്റ് ചെയ്തു.');
+            });
+
+            document.getElementById('downloadLeaderboardBtn').addEventListener('click', downloadLeaderboardPdf);
+            document.getElementById('downloadAthleticsPdfBtn').addEventListener('click', () => downloadPdf('athletics'));
+            document.getElementById('downloadArtsPdfBtn').addEventListener('click', () => downloadPdf('arts'));
+            document.getElementById('downloadCompletedBtn').addEventListener('click', () => downloadStatusReportPdf('completed'));
+            document.getElementById('downloadPendingBtn').addEventListener('click', () => downloadStatusReportPdf('pending'));
+            document.getElementById('downloadCancelledBtn').addEventListener('click', () => downloadStatusReportPdf('cancelled'));
+            document.getElementById('downloadAppealBtn').addEventListener('click', () => downloadStatusReportPdf('appeal'));
+        });
+    </script>
+</body>
+</html>
+
