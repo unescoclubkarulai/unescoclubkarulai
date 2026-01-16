@@ -1,19 +1,69 @@
 <!DOCTYPE html>
-<html lang="ml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unesco Arts and Sports Club Pilakkottupadam, Karulai</title>
     
+    <!-- PRIMARY SEO CONFIGURATION -->
+    <title>UNESCO Arts & Sports Club Pilakkottupadam | Best Club in Karulai, Malappuram</title>
+    
+    <!-- Meta Description (Crucial for Click-Through Rates) -->
+    <meta name="description" content="UNESCO Arts & Sports Club Pilakkottupadam is the best arts and sports club in Karulai and Malappuram. Active in football, social service, and culture in Karulai Panchayath, Nilambur.">
+    
+    <!-- Keywords (Note: Google focuses more on content, but we keep these for other engines) -->
+    <meta name="keywords" content="Unesco Arts and Sports Club, Pilakkottupadam, Karulai, Unesco Club Karulai, Best Club in Malappuram, Best Club in Karulai, Sports club Malappuram, Nilambur, Unesco, Best football club Karulai, Best football club Malappuram, Karulai Panchayath, Social Service Kerala">
+    
+    <!-- Author & Robots -->
+    <meta name="author" content="Unesco Club Pilakkottupadam">
+    <meta name="robots" content="index, follow">
+    <meta name="geo.region" content="IN-KL" />
+    <meta name="geo.placename" content="Karulai" />
+    <meta name="geo.position" content="11.3066;76.3278" /> <!-- Approx Coordinates for Karulai -->
+    <meta name="ICBM" content="11.3066, 76.3278" />
+
+    <!-- Open Graph / Facebook / WhatsApp Sharing Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://unescoclubkarulai.github.io/">
+    <meta property="og:title" content="UNESCO Club Pilakkottupadam - Best Club in Malappuram">
+    <meta property="og:description" content="Join the leading arts and sports collective in Pilakkottupadam, Karulai. Football, Charity, and Culture.">
+    <meta property="og:image" content="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png?raw=true">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png?raw=true">
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="UNESCO Arts & Sports Club, Pilakkottupadam, Karulai is one of the leading clubs in Malappuram district. Our collective is actively involved in the fields of arts, sports, and social service.">
-    <meta name="keywords" content="Unesco Arts and Sports Club,Pilakkottupadam,Karulai,Unesco Club Karulai,Best Club in Malappuram,sports club malappuram,Nilambur,unesco,PILAKKOTTUPADAM">
-
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="nINx48ehOgefdn0ZXfE1f3KNJqUOz25Hq4PEWtPVjOg" />
+
+    <!-- Structured Data (Schema Markup) for Local SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsClub",
+      "name": "UNESCO Arts and Sports Club",
+      "alternateName": ["Unesco Club Karulai", "Unesco Club Pilakkottupadam"],
+      "url": "https://unescoclubkarulai.github.io/",
+      "logo": "https://github.com/unescoclubkarulai/unescoclubkarulai/blob/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png?raw=true",
+      "description": "The best arts and sports club in Karulai, Malappuram district, engaging in football, social service, and cultural activities.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Pilakkottupadam",
+        "addressLocality": "Karulai",
+        "addressRegion": "Malappuram",
+        "postalCode": "679330",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "11.3066", 
+        "longitude": "76.3278"
+      },
+      "areaServed": ["Karulai", "Nilambur", "Malappuram", "Pilakkottupadam"],
+      "sameAs": [
+        "https://www.instagram.com/unesco_pilakkottupadam",
+        "https://www.facebook.com/share/179gdCzbQj/"
+      ]
+    }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,7 +142,10 @@
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center group cursor-pointer">
                 <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png?raw=true" alt="Unesco Arts and Sports Club Pilakkottupadam Logo" class="h-12 mr-3 group-hover:scale-110 transition-transform duration-300">
-                <h1 class="text-xl md:text-2xl font-bold text-cyan-400 tracking-wide">UNESCO CLUB</h1>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-cyan-400 tracking-wide leading-none">UNESCO CLUB</h1>
+                    <span class="text-xs text-slate-400 block tracking-widest">KARULAI</span>
+                </div>
             </div>
             <nav class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-wider">
                 <a href="#home" class="hover:text-cyan-400 transition duration-300 border-b-2 border-transparent hover:border-cyan-400 pb-1">Home</a>
@@ -102,7 +155,7 @@
                 <a href="#youtube-videos" class="hover:text-cyan-400 transition duration-300 border-b-2 border-transparent hover:border-cyan-400 pb-1">Videos</a>
                 <a href="#contact" class="hover:text-cyan-400 transition duration-300 border-b-2 border-transparent hover:border-cyan-400 pb-1">Contact</a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden focus:outline-none text-cyan-400">
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none text-cyan-400" aria-label="Open Menu">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
@@ -120,25 +173,31 @@
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section id="home" class="hero-bg h-[65vh] flex items-center justify-center text-center relative">
-            <div class="absolute inset-0 bg-black/40"></div>
-            <div class="relative z-10 p-8 rounded-xl fade-in max-w-4xl mx-auto">
+        <section id="home" class="hero-bg h-[70vh] flex items-center justify-center text-center relative">
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="relative z-10 p-8 rounded-xl fade-in max-w-5xl mx-auto">
                 <span class="inline-block py-1 px-3 rounded-full bg-cyan-500/20 text-cyan-300 text-sm font-semibold mb-4 border border-cyan-500/30">ESTD 2013</span>
-                <h2 class="text-5xl md:text-7xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-sm">UNESCO ARTS & SPORTS CLUB</h2>
-                <p class="text-2xl md:text-3xl text-cyan-100 font-light tracking-wide">PILAKKOTTUPADAM</p>
+                <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-sm leading-tight">
+                    UNESCO ARTS & SPORTS CLUB
+                </h2>
+                <h3 class="text-2xl md:text-3xl text-cyan-100 font-light tracking-wide mt-2">PILAKKOTTUPADAM</h3>
+                
                 <div class="w-24 h-1 bg-cyan-500 mx-auto my-6 rounded-full"></div>
-                <p class="mt-4 text-lg text-slate-200 max-w-2xl mx-auto">A vibrant meeting place for art, sports, and lasting friendship.</p>
-                <a href="#contact" class="mt-8 inline-block px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold rounded-full transition duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/25">Join Us</a>
+                
+                <p class="mt-4 text-lg md:text-xl text-slate-200 max-w-3xl mx-auto font-light">
+                    The <strong>best club in Karulai</strong> and a vibrant community hub in <strong>Nilambur</strong>. Fostering art, sports excellence, and social service in Malappuram.
+                </p>
+                <a href="#contact" class="mt-8 inline-block px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold rounded-full transition duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/25">Join the Community</a>
             </div>
         </section>
 
         <!-- Slideshow Section -->
         <section class="py-16 bg-slate-800">
             <div class="container mx-auto px-6 text-center fade-in">
-                <h3 class="text-3xl font-bold mb-10 text-cyan-400">Memorable Moments</h3>
+                <h3 class="text-3xl font-bold mb-10 text-cyan-400">Memorable Moments in Karulai</h3>
                 <div id="slideshow" class="relative w-full max-w-5xl mx-auto h-64 sm:h-80 md:h-[500px] overflow-hidden rounded-2xl shadow-2xl border-4 border-slate-700">
-                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/3%20cover.webp?raw=true" alt="Unesco Club Karulai event photo" class="slide absolute w-full h-full object-cover opacity-0">
-                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/6%20cover.webp?raw=true" alt="Unesco Club Pilakkottupadam team picture" class="slide absolute w-full h-full object-cover opacity-0">
+                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/3%20cover.webp?raw=true" alt="Unesco Club Karulai cultural events" class="slide absolute w-full h-full object-cover opacity-0">
+                    <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/6%20cover.webp?raw=true" alt="Best football club Malappuram team photo" class="slide absolute w-full h-full object-cover opacity-0">
                     <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/2%20cover.webp?raw=true" alt="Sports activities at Unesco Club Karulai" class="slide absolute w-full h-full object-cover opacity-0">
                     <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/1%20cover.webp?raw=true" alt="Group photo of Unesco Club Pilakkottupadam members" class="slide absolute w-full h-full object-cover opacity-0">
                 </div>
@@ -146,14 +205,16 @@
         </section>
 
 
-        <!-- About Us Section -->
+        <!-- About Us Section (Optimized for SEO) -->
         <section id="about" class="py-20 bg-slate-900">
             <div class="container mx-auto px-6 text-center fade-in">
                 <h3 class="text-3xl font-bold mb-4 text-cyan-400">About Us</h3>
                 <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mb-10 rounded-full"></div>
                 <div class="bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-700 max-w-4xl mx-auto">
                     <p class="text-lg leading-relaxed text-slate-300 text-justify md:text-center">
-                        UNESCO Arts & Sports Club is located in Pilakkottupadam Ward of Karulai Panchayat, Nilambur, Malappuram district. Established in 2013 with the aim of encouraging and nurturing the artistic and sporting talents of the youth of Pilakkottupadam, the club is a collective driven by social commitment. Our objective is to work together for the welfare and betterment of the community. Over the years, UNESCO Club has successfully carried out numerous activities for the benefit of the locality, including various charitable initiatives, free medical camps, football tournaments, and blood donation camps.
+                        <strong>UNESCO Arts & Sports Club</strong> is a premier organization located in Pilakkottupadam Ward of <strong>Karulai Panchayat</strong>, near <strong>Nilambur</strong> in <strong>Malappuram</strong> district. Established in 2013, we are widely recognized as the <strong>best club in Karulai</strong>, dedicated to encouraging and nurturing the artistic and sporting talents of our youth.
+                        <br><br>
+                        More than just a sports team, we are a collective driven by social commitment. Our objective is to work together for the welfare and betterment of the community in Pilakkottupadam and Karulai. Over the years, UNESCO Club has successfully carried out numerous charitable initiatives, free medical camps, and football tournaments, cementing our reputation as the <strong>best club in Malappuram</strong> for social service and sports excellence.
                     </p>
                 </div>
             </div>
@@ -177,10 +238,10 @@
                             <h4 class="text-2xl font-bold text-white">Arts & Culture</h4>
                         </div>
                         <ul class="space-y-3 text-slate-300">
-                            <li class="flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>Drama & Musical Programs</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>Drama & Musical Programs in Nilambur</li>
                             <li class="flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>Drawing Competitions</li>
                             <li class="flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>Literary Gatherings</li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>Cultural Festivals</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>Major Cultural Festivals</li>
                         </ul>
                     </div>
                     <!-- Sports -->
@@ -192,22 +253,22 @@
                             <h4 class="text-2xl font-bold text-white">Sports & Fitness</h4>
                         </div>
                         <ul class="space-y-3 text-slate-300">
-                            <li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>Football, Cricket & Volleyball</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>Best Football Club Karulai Training</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>Football, Cricket & Volleyball Leagues</li>
                             <li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>Kabaddi Competitions</li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>Sports Training Camps</li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>Health Awareness Programs</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>Health Awareness in Karulai</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Gallery Section (NEW STYLE) -->
+        <!-- Gallery Section -->
         <section id="gallery" class="py-24 bg-slate-900">
             <div class="container mx-auto px-4 fade-in">
                 <div class="text-center mb-16">
                     <h3 class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Photo Gallery</h3>
-                    <p class="text-slate-400 max-w-2xl mx-auto">Capturing the vibrant moments, team spirit, and celebrations of our community.</p>
+                    <p class="text-slate-400 max-w-2xl mx-auto">Capturing the vibrant moments, team spirit, and celebrations of the <strong>best club in Karulai</strong>.</p>
                 </div>
 
                 <!-- Masonry Layout using Tailwind Columns -->
@@ -215,7 +276,7 @@
                     
                     <!-- Gallery Item 1 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/1%20cover.webp?raw=true" alt="Unesco club onam Celebration" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/1%20cover.webp?raw=true" alt="Unesco club onam Celebration Karulai" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Onam Celebration</p>
                         </div>
@@ -223,7 +284,7 @@
 
                     <!-- Gallery Item 2 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/2%20cover.webp?raw=true" alt="Unesco club footaball team" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/2%20cover.webp?raw=true" alt="Unesco club football team Karulai" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Football Team</p>
                         </div>
@@ -231,7 +292,7 @@
 
                     <!-- Gallery Item 3 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/3%20cover.webp?raw=true" alt="Unesco club Pilakkottupadam" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/3%20cover.webp?raw=true" alt="Unesco club Pilakkottupadam Members" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Club Members</p>
                         </div>
@@ -239,7 +300,7 @@
 
                     <!-- Gallery Item 4 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/4%20cover.webp?raw=true" alt="Unesco PSL Football Leage" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/4%20cover.webp?raw=true" alt="Unesco PSL Football League Karulai" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">PSL League</p>
                         </div>
@@ -247,7 +308,7 @@
                     
                     <!-- Gallery Item Logo (Small) -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800 p-4 flex items-center justify-center border border-slate-700">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/unesco%20logo(%20PNG%20FILE).png?raw=true" alt="Logo" class="w-3/4 h-auto transform transition duration-500 group-hover:scale-110 group-hover:rotate-6">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/unesco%20logo(%20PNG%20FILE).png?raw=true" alt="Unesco Club Logo" class="w-3/4 h-auto transform transition duration-500 group-hover:scale-110 group-hover:rotate-6">
                     </div>
 
                     <!-- Gallery Item 5 -->
@@ -260,7 +321,7 @@
 
                     <!-- Gallery Item 6 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/6%20cover.webp?raw=true" alt="Unesco club Anshid" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/6%20cover.webp?raw=true" alt="Unesco club Karulai Team" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Team</p>
                         </div>
@@ -268,7 +329,7 @@
 
                     <!-- Gallery Item 7 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-06-19.webp?raw=true" alt="Unesco club football leage" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-06-19.webp?raw=true" alt="Unesco club football league Karulai" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">League Action</p>
                         </div>
@@ -276,38 +337,38 @@
 
                     <!-- Gallery Item 8 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28.webp?raw=true" alt="Unesco onam celebration" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28.webp?raw=true" alt="Unesco onam celebration Pilakkottupadam" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Celebration</p>
                         </div>
                     </div>
 
-                     <!-- Gallery Item 9 -->
+                      <!-- Gallery Item 9 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(2).webp?raw=true" alt="Unesco club Karulai" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(2).webp?raw=true" alt="Best Club in Karulai Activities" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                     </div>
 
                     <!-- Gallery Item 10 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(1).webp?raw=true" alt="Unesco club" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(1).webp?raw=true" alt="Unesco club social service" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                     </div>
 
                     <!-- Gallery Item 11 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31.webp?raw=true" alt="Unesco Kerala" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31.webp?raw=true" alt="Unesco Kerala Cultural Arts" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Cultural Art</p>
                         </div>
                     </div>
 
-                     <!-- Gallery Item 12 -->
+                      <!-- Gallery Item 12 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(2).webp?raw=true" alt="Best Club In Karulai" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(2).webp?raw=true" alt="Best Club In Karulai Malappuram" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                     </div>
 
                     <!-- Gallery Item 13 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(1).webp?raw=true" alt="Vadamvali" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(1).webp?raw=true" alt="Vadamvali Karulai Unesco" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <p class="text-white font-semibold translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Vadamvali</p>
                         </div>
@@ -315,7 +376,7 @@
 
                     <!-- Gallery Item 14 -->
                     <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-lg bg-slate-800">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp?raw=true" alt="Members" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
+                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp?raw=true" alt="Unesco Members" class="w-full h-auto transform transition duration-500 group-hover:scale-110">
                     </div>
                 </div>
 
@@ -331,7 +392,7 @@
         <!-- YouTube Videos Section -->
         <section id="youtube-videos" class="py-20 bg-slate-800">
             <div class="container mx-auto px-6 text-center fade-in">
-                <h3 class="text-3xl font-bold mb-12 text-cyan-400">YouTube Videos</h3>
+                <h3 class="text-3xl font-bold mb-12 text-cyan-400">Our Activities on YouTube</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="video-container shadow-xl rounded-xl overflow-hidden border border-slate-700 hover:shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-1">
                         <iframe src="https://www.youtube.com/embed/vMNSUOn7uxw" title="Unesco Club Pilakkottupadam Video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -369,7 +430,11 @@
                     <div class="space-y-6 text-left">
                         <div class="flex items-start">
                             <svg class="w-6 h-6 mr-4 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span class="text-slate-300">Unesco Club, Pilakkottupadam,<br>Karulai P.O., Malappuram - 679330</span>
+                            <span class="text-slate-300">
+                                <strong>UNESCO Club</strong>,<br>
+                                Pilakkottupadam, Karulai P.O.,<br>
+                                Malappuram Dist, Kerala - 679330
+                            </span>
                         </div>
                         <div class="flex items-center">
                             <svg class="w-6 h-6 mr-4 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
@@ -398,8 +463,9 @@
     <!-- Footer -->
     <footer class="bg-slate-900 border-t border-slate-700 py-8">
         <div class="container mx-auto px-6 text-center text-slate-500">
+            <p class="mb-2 text-slate-400">Serving Karulai Panchayath & Nilambur since 2013</p>
             <p class="mb-2">&copy; 2026 Unesco Club Karulai. All rights reserved.</p>
-            <p class="text-sm">Designed with <span class="text-red-500">❤</span> for Pilakkottupadam</p>
+            <p class="text-sm">Designed with <span class="text-red-500">❤</span> for Pilakkottupadam, Malappuram</p>
         </div>
     </footer>
 
