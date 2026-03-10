@@ -14,8 +14,8 @@
     <meta property="og:url" content="https://unescoclubkarulai.github.io/">
     <meta property="og:title" content="UNESCO Club Pilakkottupadam - Best Club in Malappuram">
     <meta property="og:description" content="Join the leading arts and sports collective in Pilakkottupadam, Karulai.">
-    <meta property="og:image" content="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png?raw=true">
-    <link rel="icon" type="image/png" href="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png?raw=true">
+    <meta property="og:image" content="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png">
     <meta name="google-site-verification" content="nINx48ehOgefdn0ZXfE1f3KNJqUOz25Hq4PEWtPVjOg"/>
     <meta name="theme-color" content="#0f4019">
 
@@ -28,8 +28,8 @@
         script-src 'self' 'unsafe-inline';
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         font-src https://fonts.gstatic.com;
-        img-src 'self' data: https://github.com https://raw.githubusercontent.com https://avatars.githubusercontent.com;
-        frame-src https://www.youtube.com https://www.youtube-nocookie.com;
+        img-src 'self' data: https://raw.githubusercontent.com https://avatars.githubusercontent.com https://i.ytimg.com;
+        frame-src https://www.youtube-nocookie.com;
         connect-src 'self';
         object-src 'none';
         base-uri 'self';
@@ -69,9 +69,15 @@
     }
     </script>
 
+    <!-- ✅ PERF: Preconnect to font origins early -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- ✅ PERF: Non-blocking font load — media=print trick removes render-blocking -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap"></noscript>
+
+    <!-- ✅ PERF: Preload LCP hero image — fetchpriority=high for fastest LCP -->
+    <link rel="preload" as="image" href="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp" fetchpriority="high">
 
     <style>
         :root {
@@ -264,7 +270,7 @@
 
         .hero-img {
             position: absolute; inset: 0;
-            background: url('https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp?raw=true') center center / cover no-repeat;
+            background: url('https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp') center center / cover no-repeat;
             animation: slowZoom 14s ease-in-out infinite alternate;
         }
         @keyframes slowZoom {
@@ -707,6 +713,45 @@
             letter-spacing: 2px; color: rgba(240,244,240,0.4);
         }
 
+        /* ══════════════════ YOUTUBE FACADE ══════════════════ */
+        .yt-facade {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            cursor: pointer;
+            background: #000;
+        }
+        .yt-facade .yt-thumb {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+        .yt-facade:hover .yt-thumb { opacity: 0.75; }
+        .yt-facade .yt-play {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px; height: 44px;
+            background: #ff0000;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+            z-index: 2;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .yt-facade:hover .yt-play,
+        .yt-facade:active .yt-play { background: #cc0000; transform: translate(-50%, -50%) scale(1.1); }
+        .yt-facade iframe {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; border: none;
+        }
+
         /* ══════════════════ VIDEOS ══════════════════ */
         .videos-section { background: var(--dark2); }
         .videos-grid {
@@ -906,7 +951,7 @@
     <header>
         <div class="header-inner">
             <a href="#home" class="logo-wrap">
-                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png?raw=true" alt="UNESCO Club Logo" width="48" height="48">
+                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/a44988150e693a33c0a9640702462d54798deb2d/unesco%20club%20logo.png" alt="UNESCO Club Logo" width="48" height="48" fetchpriority="high">
                 <div class="logo-text">
                     <h1>UNESCO <span>CLUB</span></h1>
                     <small>⚽ Karulai · Est 2013</small>
@@ -988,10 +1033,10 @@
                 </div>
                 <div class="slideshow-frame reveal">
                     <div id="slideshow">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/3%20cover.webp?raw=true" alt="Cultural event" class="slide" loading="lazy">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/6%20cover.webp?raw=true" alt="Football team" class="slide" loading="lazy">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/2%20cover.webp?raw=true" alt="Sports activity" class="slide" loading="lazy">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/1%20cover.webp?raw=true" alt="Club members" class="slide" loading="lazy">
+                        <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/3%20cover.webp" alt="Cultural event" class="slide" width="1280" height="704" loading="lazy">
+                        <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/6%20cover.webp" alt="Football team" class="slide" width="1280" height="704" loading="lazy">
+                        <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/2%20cover.webp" alt="Sports activity" class="slide" width="1280" height="704" loading="lazy">
+                        <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/d636cd41e9666041ebc12d0f3e8734b3f02d5a9e/1%20cover.webp" alt="Club members" class="slide" width="1280" height="704" loading="lazy">
                     </div>
                     <div class="slide-dots" id="slide-dots"></div>
                 </div>
@@ -1064,77 +1109,77 @@
                     <div class="carousel-outer" id="carouselOuter">
                         <div class="carousel-track" id="galleryTrack">
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/1%20cover.webp?raw=true" alt="Onam Celebration" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/25d24b6e10d04b39c7c065f271750970deab59c6/1%20cover.webp" alt="Onam Celebration" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">01</span>
                                 <div class="carousel-caption"><p>Onam Celebration</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/2%20cover.webp?raw=true" alt="Football Team" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/25d24b6e10d04b39c7c065f271750970deab59c6/2%20cover.webp" alt="Football Team" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">02</span>
                                 <div class="carousel-caption"><p>Football Team</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/3%20cover.webp?raw=true" alt="Club Members" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/25d24b6e10d04b39c7c065f271750970deab59c6/3%20cover.webp" alt="Club Members" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">03</span>
                                 <div class="carousel-caption"><p>Club Members</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/4%20cover.webp?raw=true" alt="PSL League" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/25d24b6e10d04b39c7c065f271750970deab59c6/4%20cover.webp" alt="PSL League" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">04</span>
                                 <div class="carousel-caption"><p>PSL League</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/5%20cover.webp?raw=true" alt="Onam Vibes" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/25d24b6e10d04b39c7c065f271750970deab59c6/5%20cover.webp" alt="Onam Vibes" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">05</span>
                                 <div class="carousel-caption"><p>Onam Vibes</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/6%20cover.webp?raw=true" alt="Team" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/25d24b6e10d04b39c7c065f271750970deab59c6/6%20cover.webp" alt="Team" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">06</span>
                                 <div class="carousel-caption"><p>Team</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-06-19.webp?raw=true" alt="League Action" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-06-19.webp" alt="League Action" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">07</span>
                                 <div class="carousel-caption"><p>League Action</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28.webp?raw=true" alt="Celebration" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28.webp" alt="Celebration" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">08</span>
                                 <div class="carousel-caption"><p>Celebration</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(2).webp?raw=true" alt="Club Activities" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(2).webp" alt="Club Activities" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">09</span>
                                 <div class="carousel-caption"><p>Club Activities</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(1).webp?raw=true" alt="Social Service" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(1).webp" alt="Social Service" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">10</span>
                                 <div class="carousel-caption"><p>Social Service</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31.webp?raw=true" alt="Cultural Art" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31.webp" alt="Cultural Art" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">11</span>
                                 <div class="carousel-caption"><p>Cultural Art</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(2).webp?raw=true" alt="Best Club Karulai" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(2).webp" alt="Best Club Karulai" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">12</span>
                                 <div class="carousel-caption"><p>Best Club Karulai</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(1).webp?raw=true" alt="Vadamvali" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(1).webp" alt="Vadamvali" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">13</span>
                                 <div class="carousel-caption"><p>Vadamvali</p></div>
                             </div>
                             <div class="carousel-card">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp?raw=true" alt="UNESCO Members" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp" alt="UNESCO Members" width="640" height="480" loading="lazy">
                                 <span class="carousel-num">14</span>
                                 <div class="carousel-caption"><p>UNESCO Members</p></div>
                             </div>
                             <div class="carousel-card" style="background:var(--dark2); display:flex; align-items:center; justify-content:center; padding:1.5rem;">
-                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/unesco%20logo(%20PNG%20FILE).png?raw=true" alt="UNESCO Club Logo" style="width:70%; height:auto; object-fit:contain;" loading="lazy">
+                                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/unesco%20logo(%20PNG%20FILE).png" alt="UNESCO Club Logo" style="width:70%; height:auto; object-fit:contain;" loading="lazy">
                             </div>
                         </div>
                     </div>
@@ -1159,16 +1204,16 @@
                     <h3 class="section-title">YouTube Highlights</h3>
                     <div class="section-rule"></div>
                 </div>
-                <div class="videos-grid reveal">
-                    <!-- ✅ SECURITY: Using youtube-nocookie.com — privacy-enhanced embeds, no tracking cookies -->
-                    <div class="video-wrap"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/vMNSUOn7uxw" title="Video 1" allowfullscreen loading="lazy"></iframe></div></div>
-                    <div class="video-wrap"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/MAZT0vNZEaI" title="Video 2" allowfullscreen loading="lazy"></iframe></div></div>
-                    <div class="video-wrap"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/moRNRuqe8mo" title="Video 3" allowfullscreen loading="lazy"></iframe></div></div>
-                    <div class="video-wrap"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/HoesfqNljr8" title="Video 4" allowfullscreen loading="lazy"></iframe></div></div>
-                    <div class="video-wrap"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/W9UqLkWuMXg" title="Video 5" allowfullscreen loading="lazy"></iframe></div></div>
-                    <div class="video-wrap"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/In8VFgYUSoc" title="Video 6" allowfullscreen loading="lazy"></iframe></div></div>
-                    <div class="video-wrap"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/Y1zB4Dx0eeM" title="Video 7" allowfullscreen loading="lazy"></iframe></div></div>
-                    <div class="video-wrap"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/iFy7XFr50vs" title="Video 8" allowfullscreen loading="lazy"></iframe></div></div>
+                <!-- ✅ PERF: YouTube facade — iframes load only on click, saves ~181KB JS + removes 3rd-party cookies -->
+                <div class="videos-grid reveal" id="videoGrid">
+                    <div class="video-wrap"><div class="video-container yt-facade" data-id="vMNSUOn7uxw"><img class="yt-thumb" src="https://i.ytimg.com/vi/vMNSUOn7uxw/hqdefault.jpg" alt="Video 1" loading="lazy" width="480" height="360"><button class="yt-play" aria-label="Play Video 1">▶</button></div></div>
+                    <div class="video-wrap"><div class="video-container yt-facade" data-id="MAZT0vNZEaI"><img class="yt-thumb" src="https://i.ytimg.com/vi/MAZT0vNZEaI/hqdefault.jpg" alt="Video 2" loading="lazy" width="480" height="360"><button class="yt-play" aria-label="Play Video 2">▶</button></div></div>
+                    <div class="video-wrap"><div class="video-container yt-facade" data-id="moRNRuqe8mo"><img class="yt-thumb" src="https://i.ytimg.com/vi/moRNRuqe8mo/hqdefault.jpg" alt="Video 3" loading="lazy" width="480" height="360"><button class="yt-play" aria-label="Play Video 3">▶</button></div></div>
+                    <div class="video-wrap"><div class="video-container yt-facade" data-id="HoesfqNljr8"><img class="yt-thumb" src="https://i.ytimg.com/vi/HoesfqNljr8/hqdefault.jpg" alt="Video 4" loading="lazy" width="480" height="360"><button class="yt-play" aria-label="Play Video 4">▶</button></div></div>
+                    <div class="video-wrap"><div class="video-container yt-facade" data-id="W9UqLkWuMXg"><img class="yt-thumb" src="https://i.ytimg.com/vi/W9UqLkWuMXg/hqdefault.jpg" alt="Video 5" loading="lazy" width="480" height="360"><button class="yt-play" aria-label="Play Video 5">▶</button></div></div>
+                    <div class="video-wrap"><div class="video-container yt-facade" data-id="In8VFgYUSoc"><img class="yt-thumb" src="https://i.ytimg.com/vi/In8VFgYUSoc/hqdefault.jpg" alt="Video 6" loading="lazy" width="480" height="360"><button class="yt-play" aria-label="Play Video 6">▶</button></div></div>
+                    <div class="video-wrap"><div class="video-container yt-facade" data-id="Y1zB4Dx0eeM"><img class="yt-thumb" src="https://i.ytimg.com/vi/Y1zB4Dx0eeM/hqdefault.jpg" alt="Video 7" loading="lazy" width="480" height="360"><button class="yt-play" aria-label="Play Video 7">▶</button></div></div>
+                    <div class="video-wrap"><div class="video-container yt-facade" data-id="iFy7XFr50vs"><img class="yt-thumb" src="https://i.ytimg.com/vi/iFy7XFr50vs/hqdefault.jpg" alt="Video 8" loading="lazy" width="480" height="360"><button class="yt-play" aria-label="Play Video 8">▶</button></div></div>
                 </div>
             </div>
         </section>
@@ -1234,6 +1279,26 @@
     </a>
 
     <script>
+        // ════════════════════════════════════════════
+        // ✅ PERF: YouTube Facade — load iframe only on click
+        // Saves ~181KB JS, eliminates 3rd party cookies on load
+        // ════════════════════════════════════════════
+        document.querySelectorAll('.yt-facade').forEach(function(facade) {
+            facade.addEventListener('click', function() {
+                var id = facade.getAttribute('data-id');
+                var iframe = document.createElement('iframe');
+                iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+                iframe.title = 'YouTube Video';
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+                iframe.loading = 'lazy';
+                // Remove thumbnail and play button, insert iframe
+                facade.innerHTML = '';
+                facade.appendChild(iframe);
+                facade.style.cursor = 'default';
+            });
+        });
+
         // ════════════════════════════════════════════
         // ✅ SECURITY: Contact info assembled at runtime
         // Bots scraping raw HTML will NOT find phone/email
