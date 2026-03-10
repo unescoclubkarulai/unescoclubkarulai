@@ -603,51 +603,124 @@
         .activity-card.sports ul li::before { content: '⚽'; font-size: 0.6rem; }
 
         /* ══════════════════════════════
-           GALLERY
+           GALLERY — CAROUSEL SLIDER
         ══════════════════════════════ */
         .gallery-section { background: var(--dark); }
 
-        .gallery-grid {
-            columns: 1; gap: 0.8rem;
+        /* outer wrapper clips the track */
+        .carousel-outer {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
         }
-        @media (min-width: 480px) { .gallery-grid { columns: 2; } }
-        @media (min-width: 768px) { .gallery-grid { columns: 3; } }
-        @media (min-width: 1100px) { .gallery-grid { columns: 4; } }
 
-        .gallery-item {
-            break-inside: avoid; margin-bottom: 0.8rem;
-            position: relative; overflow: hidden;
-            border: 1px solid rgba(45,145,66,0.15);
-            transition: border-color 0.3s;
+        /* the scrolling track */
+        .carousel-track {
+            display: flex;
+            gap: 12px;
+            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+            will-change: transform;
         }
-        .gallery-item:hover { border-color: var(--pitch); }
 
-        .gallery-item img {
-            width: 100%; height: auto; display: block;
-            transition: transform 0.5s;
+        /* each card */
+        .carousel-card {
+            flex: 0 0 calc(33.33% - 8px);
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            background: var(--dark2);
+            border: 1px solid rgba(45,145,66,0.18);
+            cursor: pointer;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .gallery-item:hover img { transform: scale(1.07); }
+        @media (max-width: 768px)  { .carousel-card { flex: 0 0 calc(50% - 6px); } }
+        @media (max-width: 480px)  { .carousel-card { flex: 0 0 calc(85% - 6px); } }
 
-        .gallery-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(10,63,25,0.9) 0%, transparent 55%);
-            opacity: 0; transition: opacity 0.3s;
-            display: flex; align-items: flex-end; padding: 1rem;
+        .carousel-card:hover {
+            border-color: var(--pitch-lt);
+            box-shadow: 0 8px 32px rgba(26,107,42,0.35);
         }
-        .gallery-item:hover .gallery-overlay { opacity: 1; }
-        .gallery-overlay p {
+
+        .carousel-card img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            transition: transform 0.45s ease;
+        }
+        .carousel-card:hover img { transform: scale(1.07); }
+
+        /* caption slides up on hover */
+        .carousel-caption {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(to top, rgba(5,30,12,0.95) 0%, transparent 100%);
+            padding: 1.4rem 1rem 0.8rem;
+            transform: translateY(100%);
+            transition: transform 0.35s ease;
+        }
+        .carousel-card:hover .carousel-caption { transform: translateY(0); }
+
+        .carousel-caption p {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.9rem; font-weight: 700;
+            font-size: 0.85rem; font-weight: 700;
             letter-spacing: 2px; text-transform: uppercase;
             color: var(--pitch-bright);
         }
 
-        .gallery-logo {
-            background: var(--dark2);
-            display: flex; align-items: center; justify-content: center;
-            padding: 2rem; border: 1px solid rgba(45,145,66,0.25);
+        /* number badge */
+        .carousel-num {
+            position: absolute; top: 10px; left: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.65rem; font-weight: 900;
+            letter-spacing: 2px; color: #fff;
+            background: var(--pitch);
+            padding: 3px 9px;
+            clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+            opacity: 0; transition: opacity 0.3s;
         }
-        .gallery-logo img { width: 75%; }
+        .carousel-card:hover .carousel-num { opacity: 1; }
+
+        /* nav buttons */
+        .carousel-nav {
+            display: flex; align-items: center; justify-content: center;
+            gap: 1rem; margin-top: 1.5rem;
+        }
+        .c-btn {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.1rem; font-weight: 900;
+            width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(45,145,66,0.12);
+            border: 1px solid rgba(45,145,66,0.35);
+            color: var(--pitch-bright);
+            cursor: pointer;
+            transition: all 0.3s;
+            clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+            user-select: none;
+        }
+        .c-btn:hover { background: var(--pitch); color: #fff; transform: scale(1.1); }
+        .c-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+        /* progress dots */
+        .carousel-dots {
+            display: flex; gap: 6px; align-items: center;
+        }
+        .c-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: rgba(45,145,66,0.3);
+            border: 1px solid rgba(45,145,66,0.4);
+            cursor: pointer; transition: all 0.3s;
+        }
+        .c-dot.active {
+            background: var(--pitch-bright);
+            transform: scale(1.4);
+        }
+
+        /* counter text */
+        .c-counter {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 2px; color: rgba(240,244,240,0.35);
+        }
 
         /* ══════════════════════════════
            VIDEOS
@@ -966,63 +1039,100 @@
                     <h3 class="section-title">Photo Gallery</h3>
                     <div class="section-rule"></div>
                 </div>
-                <div class="gallery-grid reveal">
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/1%20cover.webp?raw=true" alt="Onam Celebration">
-                        <div class="gallery-overlay"><p>Onam Celebration</p></div>
+
+                <!-- CAROUSEL -->
+                <div class="reveal">
+                    <div class="carousel-outer" id="carouselOuter">
+                        <div class="carousel-track" id="galleryTrack">
+
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/1%20cover.webp?raw=true" alt="Onam Celebration">
+                                <span class="carousel-num">01</span>
+                                <div class="carousel-caption"><p>Onam Celebration</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/2%20cover.webp?raw=true" alt="Football Team">
+                                <span class="carousel-num">02</span>
+                                <div class="carousel-caption"><p>Football Team</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/3%20cover.webp?raw=true" alt="Club Members">
+                                <span class="carousel-num">03</span>
+                                <div class="carousel-caption"><p>Club Members</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/4%20cover.webp?raw=true" alt="PSL League">
+                                <span class="carousel-num">04</span>
+                                <div class="carousel-caption"><p>PSL League</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/5%20cover.webp?raw=true" alt="Onam Vibes">
+                                <span class="carousel-num">05</span>
+                                <div class="carousel-caption"><p>Onam Vibes</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/6%20cover.webp?raw=true" alt="Team">
+                                <span class="carousel-num">06</span>
+                                <div class="carousel-caption"><p>Team</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-06-19.webp?raw=true" alt="League Action">
+                                <span class="carousel-num">07</span>
+                                <div class="carousel-caption"><p>League Action</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28.webp?raw=true" alt="Celebration">
+                                <span class="carousel-num">08</span>
+                                <div class="carousel-caption"><p>Celebration</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(2).webp?raw=true" alt="Club Activities">
+                                <span class="carousel-num">09</span>
+                                <div class="carousel-caption"><p>Club Activities</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(1).webp?raw=true" alt="Social Service">
+                                <span class="carousel-num">10</span>
+                                <div class="carousel-caption"><p>Social Service</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31.webp?raw=true" alt="Cultural Art">
+                                <span class="carousel-num">11</span>
+                                <div class="carousel-caption"><p>Cultural Art</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(2).webp?raw=true" alt="Best Club Karulai">
+                                <span class="carousel-num">12</span>
+                                <div class="carousel-caption"><p>Best Club Karulai</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(1).webp?raw=true" alt="Vadamvali">
+                                <span class="carousel-num">13</span>
+                                <div class="carousel-caption"><p>Vadamvali</p></div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp?raw=true" alt="UNESCO Members">
+                                <span class="carousel-num">14</span>
+                                <div class="carousel-caption"><p>UNESCO Members</p></div>
+                            </div>
+                            <div class="carousel-card" style="background:var(--dark2); display:flex; align-items:center; justify-content:center; padding:1.5rem;">
+                                <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/unesco%20logo(%20PNG%20FILE).png?raw=true" alt="UNESCO Club Logo" style="width:70%; height:auto; object-fit:contain;">
+                            </div>
+
+                        </div><!-- end track -->
+                    </div><!-- end outer -->
+
+                    <!-- Nav row -->
+                    <div class="carousel-nav">
+                        <button class="c-btn" id="cPrev" aria-label="Previous">◀</button>
+                        <div class="carousel-dots" id="cDots"></div>
+                        <button class="c-btn" id="cNext" aria-label="Next">▶</button>
                     </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/2%20cover.webp?raw=true" alt="Football Team">
-                        <div class="gallery-overlay"><p>Football Team</p></div>
+                    <div style="text-align:center; margin-top:0.6rem;">
+                        <span class="c-counter" id="cCounter">1 / 15</span>
                     </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/3%20cover.webp?raw=true" alt="Club Members">
-                        <div class="gallery-overlay"><p>Club Members</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/4%20cover.webp?raw=true" alt="PSL League">
-                        <div class="gallery-overlay"><p>PSL League</p></div>
-                    </div>
-                    <div class="gallery-item gallery-logo">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/unesco%20logo(%20PNG%20FILE).png?raw=true" alt="UNESCO Club Logo">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/5%20cover.webp?raw=true" alt="Onam Vibes">
-                        <div class="gallery-overlay"><p>Onam Vibes</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/25d24b6e10d04b39c7c065f271750970deab59c6/6%20cover.webp?raw=true" alt="Team">
-                        <div class="gallery-overlay"><p>Team</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-06-19.webp?raw=true" alt="League Action">
-                        <div class="gallery-overlay"><p>League Action</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28.webp?raw=true" alt="Celebration">
-                        <div class="gallery-overlay"><p>Celebration</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(2).webp?raw=true" alt="Club Activities">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2025-01-28%20(1).webp?raw=true" alt="Social Service">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31.webp?raw=true" alt="Cultural Art">
-                        <div class="gallery-overlay"><p>Cultural Art</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(2).webp?raw=true" alt="Best Club Karulai">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2023-08-31%20(1).webp?raw=true" alt="Vadamvali">
-                        <div class="gallery-overlay"><p>Vadamvali</p></div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/unescoclubkarulai/unescoclubkarulai/blob/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp?raw=true" alt="UNESCO Members">
-                    </div>
-                </div>
+
+                </div><!-- end reveal -->
             </div>
         </section>
 
@@ -1066,7 +1176,7 @@
                         <div class="contact-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                         </div>
-                        <a href="mailto:unescoclub2013@gmail.com">unescoclub2013@gmail.com</a>
+                        <a href="/cdn-cgi/l/email-protection#fa8f949f89999599968f98c8cacbc9ba9d979b9396d4999597"><span class="__cf_email__" data-cfemail="98edf6fdebfbf7fbf4edfaaaa8a9abd8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span></a>
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon">
@@ -1104,7 +1214,7 @@
         </svg>
     </a>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Mobile menu
         const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobile-nav');
@@ -1129,7 +1239,7 @@
             }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' }))
             : reveals.forEach(el => el.classList.add('visible'));
 
-        // Slideshow with dots
+        // ── SLIDESHOW ──
         const slides = document.querySelectorAll('#slideshow .slide');
         const dotsContainer = document.getElementById('slide-dots');
         let cur = 0;
@@ -1152,6 +1262,87 @@
             showSlide(0);
             setInterval(() => { cur = (cur + 1) % slides.length; showSlide(cur); }, 4000);
         }
+        // ── GALLERY CAROUSEL ──
+        (function() {
+            const track   = document.getElementById('galleryTrack');
+            const prevBtn = document.getElementById('cPrev');
+            const nextBtn = document.getElementById('cNext');
+            const dotsEl  = document.getElementById('cDots');
+            const counter = document.getElementById('cCounter');
+            if (!track) return;
+
+            const cards = track.querySelectorAll('.carousel-card');
+            const total = cards.length;
+            let pos = 0;
+
+            function visibleCount() {
+                if (window.innerWidth <= 480) return 1;
+                if (window.innerWidth <= 768) return 2;
+                return 3;
+            }
+
+            function cardWidth() {
+                const gap = 12;
+                const visible = visibleCount();
+                const outer = track.parentElement.offsetWidth;
+                return (outer - gap * (visible - 1)) / visible + gap;
+            }
+
+            function maxPos() {
+                return Math.max(0, total - visibleCount());
+            }
+
+            // Build dots
+            for (let i = 0; i < total; i++) {
+                const d = document.createElement('div');
+                d.className = 'c-dot' + (i === 0 ? ' active' : '');
+                d.addEventListener('click', () => goTo(i));
+                dotsEl.appendChild(d);
+            }
+
+            function updateDots() {
+                dotsEl.querySelectorAll('.c-dot').forEach((d, i) => d.classList.toggle('active', i === pos));
+            }
+
+            function updateBtns() {
+                prevBtn.disabled = pos === 0;
+                nextBtn.disabled = pos >= maxPos();
+            }
+
+            function updateCounter() {
+                counter.textContent = (pos + 1) + ' / ' + total;
+            }
+
+            function goTo(i) {
+                pos = Math.max(0, Math.min(maxPos(), i));
+                track.style.transform = 'translateX(-' + (pos * cardWidth()) + 'px)';
+                updateDots();
+                updateBtns();
+                updateCounter();
+            }
+
+            prevBtn.addEventListener('click', () => goTo(pos - 1));
+            nextBtn.addEventListener('click', () => goTo(pos + 1));
+
+            // Touch / swipe support
+            let touchStartX = 0;
+            track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+            track.addEventListener('touchend', e => {
+                const dx = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(dx) > 40) goTo(dx > 0 ? pos + 1 : pos - 1);
+            });
+
+            // Auto-play
+            let autoplay = setInterval(() => goTo(pos >= maxPos() ? 0 : pos + 1), 3500);
+            track.parentElement.addEventListener('mouseenter', () => clearInterval(autoplay));
+            track.parentElement.addEventListener('mouseleave', () => {
+                autoplay = setInterval(() => goTo(pos >= maxPos() ? 0 : pos + 1), 3500);
+            });
+
+            window.addEventListener('resize', () => goTo(pos));
+            goTo(0);
+        })();
+
     </script>
 </body>
 </html>
