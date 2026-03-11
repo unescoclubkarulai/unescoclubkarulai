@@ -76,8 +76,7 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap"></noscript>
 
-    <!-- ✅ PERF: Preload LCP hero image — fetchpriority=high for fastest LCP -->
-    <link rel="preload" as="image" href="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp" fetchpriority="high">
+    <!-- ✅ PERF: Hero image is a real <img> tag with fetchpriority=high — no preload needed -->
 
     <style>
         :root {
@@ -270,7 +269,12 @@
 
         .hero-img {
             position: absolute; inset: 0;
-            background: url('https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp') center center / cover no-repeat;
+            overflow: hidden;
+        }
+        .hero-img img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center;
+            display: block;
             animation: slowZoom 14s ease-in-out infinite alternate;
         }
         @keyframes slowZoom {
@@ -983,7 +987,14 @@
 
         <!-- HERO -->
         <section id="home" class="hero">
-            <div class="hero-img" role="img" aria-label="UNESCO Club team photo"></div>
+            <div class="hero-img">
+                <!-- ✅ LCP: Real <img> tag — browser discovers & preloads correctly -->
+                <img src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/7bf6e5f86dbff59047d141e0be9b988a21879bfc/2022-09-23.webp"
+                     alt="UNESCO Club team photo"
+                     width="1280" height="720"
+                     fetchpriority="high"
+                     decoding="async">
+            </div>
             <div class="hero-overlay"></div>
             <div class="hero-pitch-lines"></div>
             <div class="hero-ball" aria-hidden="true">⚽</div>
@@ -1279,78 +1290,38 @@
     </a>
 
     <script>
-        // ════════════════════════════════════════════
-        // ✅ PERF: YouTube Facade — load iframe only on click
-        // Saves ~181KB JS, eliminates 3rd party cookies on load
-        // ════════════════════════════════════════════
-        document.querySelectorAll('.yt-facade').forEach(function(facade) {
-            facade.addEventListener('click', function() {
-                var id = facade.getAttribute('data-id');
-                var iframe = document.createElement('iframe');
-                iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
-                iframe.title = 'YouTube Video';
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
-                iframe.loading = 'lazy';
-                // Remove thumbnail and play button, insert iframe
-                facade.innerHTML = '';
-                facade.appendChild(iframe);
-                facade.style.cursor = 'default';
-            });
-        });
+        // ══════════════════════════════════════════════════
+        // CRITICAL PATH — runs immediately (needed for UX)
+        // ══════════════════════════════════════════════════
 
-        // ════════════════════════════════════════════
-        // ✅ SECURITY: Contact info assembled at runtime
-        // Bots scraping raw HTML will NOT find phone/email
-        // ════════════════════════════════════════════
+        // ✅ Contact info — assembled at runtime (bot protection)
         (function () {
-            // Phone: split into parts so it's not a plain string in source
-            var p = ['98464', '20722'];
-            var cc = '91';
+            var p = ['98464', '20722'], cc = '91';
             var full = '+' + cc + ' ' + p[0] + ' ' + p[1];
             var fullRaw = cc + p[0] + p[1];
-
-            // Email: split parts
-            var eu = 'unescoclubkarulai';
-            var ed = 'gmail';
-            var et = 'com';
-            var email = eu + '\u0040' + ed + '.' + et; // \u0040 = @
-
-            // WhatsApp button
+            var email = 'unescoclubkarulai' + '\u0040' + 'gmail' + '.' + 'com';
             var waBtn = document.getElementById('wa-btn');
             if (waBtn) waBtn.href = 'https://wa.me/' + fullRaw;
-
-            // Phone display
             var phoneEl = document.getElementById('phone-display');
             if (phoneEl) {
                 phoneEl.textContent = full;
-                phoneEl.addEventListener('click', function () {
-                    window.location.href = 'tel:+' + fullRaw;
-                });
+                phoneEl.addEventListener('click', function () { window.location.href = 'tel:+' + fullRaw; });
             }
-
-            // Email display
             var emailEl = document.getElementById('email-display');
             if (emailEl) {
                 emailEl.textContent = email;
-                emailEl.addEventListener('click', function () {
-                    window.location.href = 'mailto:' + email;
-                });
+                emailEl.addEventListener('click', function () { window.location.href = 'mailto:' + email; });
             }
         })();
 
-        // ════════════════════════════════════════════
-        // Mobile menu
-        // ════════════════════════════════════════════
+        // ✅ Mobile menu — must be instant
         var hamburger = document.getElementById('hamburger');
         var mobileNav = document.getElementById('mobile-nav');
-
         hamburger.addEventListener('click', function () {
             var isOpen = mobileNav.classList.toggle('open');
             hamburger.classList.toggle('active', isOpen);
             hamburger.setAttribute('aria-expanded', isOpen);
         });
-
         mobileNav.querySelectorAll('a').forEach(function (a) {
             a.addEventListener('click', function () {
                 mobileNav.classList.remove('open');
@@ -1359,140 +1330,127 @@
             });
         });
 
-        // ════════════════════════════════════════════
-        // Smooth scroll
-        // ════════════════════════════════════════════
+        // ✅ Smooth scroll — must be instant
         document.querySelectorAll('a[href^="#"]').forEach(function (a) {
             a.addEventListener('click', function (e) {
                 var t = document.querySelector(a.getAttribute('href'));
                 if (t) {
                     e.preventDefault();
                     var headerH = document.querySelector('header').offsetHeight;
-                    var top = t.getBoundingClientRect().top + window.pageYOffset - headerH;
-                    window.scrollTo({ top: top, behavior: 'smooth' });
+                    window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - headerH, behavior: 'smooth' });
                 }
             });
         });
 
-        // ════════════════════════════════════════════
-        // Scroll reveal
-        // ════════════════════════════════════════════
-        var reveals = document.querySelectorAll('.reveal');
-        var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (e) {
-                if (e.isIntersecting) e.target.classList.add('visible');
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
-        reveals.forEach(function (el) { observer.observe(el); });
+        // ══════════════════════════════════════════════════
+        // DEFERRED — runs after browser is idle (fixes TBT)
+        // ══════════════════════════════════════════════════
+        function runDeferred() {
 
-        // ════════════════════════════════════════════
-        // Slideshow
-        // ════════════════════════════════════════════
-        var slides = document.querySelectorAll('#slideshow .slide');
-        var dotsContainer = document.getElementById('slide-dots');
-        var cur = 0;
-
-        slides.forEach(function (_, i) {
-            var d = document.createElement('div');
-            d.className = 'slide-dot' + (i === 0 ? ' active' : '');
-            d.addEventListener('click', function () { cur = i; showSlide(i); });
-            dotsContainer.appendChild(d);
-        });
-
-        function showSlide(i) {
-            slides.forEach(function (s, idx) { s.style.opacity = idx === i ? '1' : '0'; });
-            document.querySelectorAll('.slide-dot').forEach(function (d, idx) {
-                d.classList.toggle('active', idx === i);
-            });
-        }
-
-        if (slides.length) {
-            showSlide(0);
-            setInterval(function () { cur = (cur + 1) % slides.length; showSlide(cur); }, 4000);
-        }
-
-        // ════════════════════════════════════════════
-        // Gallery Carousel
-        // ════════════════════════════════════════════
-        (function () {
-            var track   = document.getElementById('galleryTrack');
-            var prevBtn = document.getElementById('cPrev');
-            var nextBtn = document.getElementById('cNext');
-            var dotsEl  = document.getElementById('cDots');
-            var counter = document.getElementById('cCounter');
-            if (!track) return;
-
-            var cards = track.querySelectorAll('.carousel-card');
-            var total = cards.length;
-            var pos = 0;
-
-            function visibleCount() {
-                if (window.innerWidth <= 400) return 1;
-                if (window.innerWidth <= 767) return 2;
-                return 3;
-            }
-
-            function cardWidth() {
-                var gap = 10;
-                var visible = visibleCount();
-                var outer = track.parentElement.offsetWidth;
-                return (outer - gap * (visible - 1)) / visible + gap;
-            }
-
-            function maxPos() { return Math.max(0, total - visibleCount()); }
-
-            for (var i = 0; i < total; i++) {
-                (function(idx) {
-                    var d = document.createElement('div');
-                    d.className = 'c-dot' + (idx === 0 ? ' active' : '');
-                    d.addEventListener('click', function () { goTo(idx); });
-                    dotsEl.appendChild(d);
-                })(i);
-            }
-
-            function updateUI() {
-                dotsEl.querySelectorAll('.c-dot').forEach(function (d, i) {
-                    d.classList.toggle('active', i === pos);
+            // ✅ YouTube Facade
+            document.querySelectorAll('.yt-facade').forEach(function (facade) {
+                facade.addEventListener('click', function () {
+                    var id = facade.getAttribute('data-id');
+                    var iframe = document.createElement('iframe');
+                    iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+                    iframe.title = 'YouTube Video';
+                    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                    iframe.allowFullscreen = true;
+                    facade.innerHTML = '';
+                    facade.appendChild(iframe);
+                    facade.style.cursor = 'default';
                 });
-                prevBtn.disabled = pos === 0;
-                nextBtn.disabled = pos >= maxPos();
-                counter.textContent = (pos + 1) + ' / ' + total;
-            }
+            });
 
-            function goTo(i) {
-                pos = Math.max(0, Math.min(maxPos(), i));
-                track.style.transform = 'translateX(-' + (pos * cardWidth()) + 'px)';
-                updateUI();
-            }
+            // ✅ Scroll reveal
+            var reveals = document.querySelectorAll('.reveal');
+            var revealObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+            reveals.forEach(function (el) { revealObs.observe(el); });
 
-            prevBtn.addEventListener('click', function () { goTo(pos - 1); });
-            nextBtn.addEventListener('click', function () { goTo(pos + 1); });
-
-            var touchStartX = 0, touchStartY = 0;
-            track.addEventListener('touchstart', function (e) {
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-            }, { passive: true });
-            track.addEventListener('touchend', function (e) {
-                var dx = touchStartX - e.changedTouches[0].clientX;
-                var dy = touchStartY - e.changedTouches[0].clientY;
-                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 35) {
-                    goTo(dx > 0 ? pos + 1 : pos - 1);
+            // ✅ Slideshow
+            var slides = document.querySelectorAll('#slideshow .slide');
+            var dotsContainer = document.getElementById('slide-dots');
+            var cur = 0;
+            if (slides.length && dotsContainer) {
+                slides.forEach(function (_, i) {
+                    var d = document.createElement('div');
+                    d.className = 'slide-dot' + (i === 0 ? ' active' : '');
+                    d.addEventListener('click', function () { cur = i; showSlide(i); });
+                    dotsContainer.appendChild(d);
+                });
+                function showSlide(i) {
+                    slides.forEach(function (s, idx) { s.style.opacity = idx === i ? '1' : '0'; });
+                    document.querySelectorAll('.slide-dot').forEach(function (d, idx) { d.classList.toggle('active', idx === i); });
                 }
-            });
+                showSlide(0);
+                setInterval(function () { cur = (cur + 1) % slides.length; showSlide(cur); }, 4000);
+            }
 
-            var autoplay = setInterval(function () {
-                goTo(pos >= maxPos() ? 0 : pos + 1);
-            }, 3500);
-            track.parentElement.addEventListener('mouseenter', function () { clearInterval(autoplay); });
-            track.parentElement.addEventListener('mouseleave', function () {
-                autoplay = setInterval(function () { goTo(pos >= maxPos() ? 0 : pos + 1); }, 3500);
-            });
-            track.parentElement.addEventListener('touchstart', function () { clearInterval(autoplay); }, { passive: true });
+            // ✅ Gallery Carousel
+            (function () {
+                var track   = document.getElementById('galleryTrack');
+                var prevBtn = document.getElementById('cPrev');
+                var nextBtn = document.getElementById('cNext');
+                var dotsEl  = document.getElementById('cDots');
+                var counter = document.getElementById('cCounter');
+                if (!track) return;
+                var cards = track.querySelectorAll('.carousel-card');
+                var total = cards.length, pos = 0;
+                function visibleCount() {
+                    return window.innerWidth <= 400 ? 1 : window.innerWidth <= 767 ? 2 : 3;
+                }
+                function cardWidth() {
+                    var gap = 10, v = visibleCount();
+                    return (track.parentElement.offsetWidth - gap * (v - 1)) / v + gap;
+                }
+                function maxPos() { return Math.max(0, total - visibleCount()); }
+                for (var i = 0; i < total; i++) {
+                    (function (idx) {
+                        var d = document.createElement('div');
+                        d.className = 'c-dot' + (idx === 0 ? ' active' : '');
+                        d.addEventListener('click', function () { goTo(idx); });
+                        dotsEl.appendChild(d);
+                    })(i);
+                }
+                function updateUI() {
+                    dotsEl.querySelectorAll('.c-dot').forEach(function (d, i) { d.classList.toggle('active', i === pos); });
+                    prevBtn.disabled = pos === 0;
+                    nextBtn.disabled = pos >= maxPos();
+                    counter.textContent = (pos + 1) + ' / ' + total;
+                }
+                function goTo(i) {
+                    pos = Math.max(0, Math.min(maxPos(), i));
+                    track.style.transform = 'translateX(-' + (pos * cardWidth()) + 'px)';
+                    updateUI();
+                }
+                prevBtn.addEventListener('click', function () { goTo(pos - 1); });
+                nextBtn.addEventListener('click', function () { goTo(pos + 1); });
+                var tX = 0, tY = 0;
+                track.addEventListener('touchstart', function (e) { tX = e.touches[0].clientX; tY = e.touches[0].clientY; }, { passive: true });
+                track.addEventListener('touchend', function (e) {
+                    var dx = tX - e.changedTouches[0].clientX, dy = tY - e.changedTouches[0].clientY;
+                    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 35) goTo(dx > 0 ? pos + 1 : pos - 1);
+                });
+                var ap = setInterval(function () { goTo(pos >= maxPos() ? 0 : pos + 1); }, 3500);
+                track.parentElement.addEventListener('mouseenter', function () { clearInterval(ap); });
+                track.parentElement.addEventListener('mouseleave', function () {
+                    ap = setInterval(function () { goTo(pos >= maxPos() ? 0 : pos + 1); }, 3500);
+                });
+                track.parentElement.addEventListener('touchstart', function () { clearInterval(ap); }, { passive: true });
+                window.addEventListener('resize', function () { goTo(Math.min(pos, maxPos())); });
+                goTo(0);
+            })();
+        }
 
-            window.addEventListener('resize', function () { goTo(Math.min(pos, maxPos())); });
-            goTo(0);
-        })();
+        // ✅ PERF: Use requestIdleCallback if available, else defer 200ms
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(runDeferred, { timeout: 2000 });
+        } else {
+            setTimeout(runDeferred, 200);
+        }
     </script>
 </body>
 </html>
+
