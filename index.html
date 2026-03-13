@@ -532,6 +532,141 @@
         }
         .about-card strong { color: var(--pitch-bright); }
 
+        /* ══════════════════ OUR TEAM ══════════════════ */
+        .team-section {
+            background: var(--dark2);
+            position: relative;
+            overflow: hidden;
+        }
+        .team-section::before {
+            content: '⚽';
+            position: absolute; left: -40px; bottom: -40px;
+            font-size: 14rem; opacity: 0.03;
+            pointer-events: none; user-select: none;
+        }
+        .team-photo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .team-photo-frame {
+            position: relative;
+            border: 3px solid var(--pitch-lt);
+            box-shadow:
+                0 0 0 1px rgba(60,184,90,0.15),
+                0 0 0 5px rgba(26,107,42,0.12),
+                0 24px 60px rgba(0,0,0,0.7);
+            overflow: hidden;
+            background: var(--dark);
+        }
+        .team-photo-frame::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--pitch-dk), var(--pitch-bright), var(--pitch-dk));
+            z-index: 2;
+        }
+        /* Corner flags */
+        .team-photo-frame::after {
+            content: '⚑';
+            position: absolute; top: -2px; right: 12px;
+            font-size: 1.1rem; color: var(--pitch-bright);
+            z-index: 3;
+        }
+        .team-flag-left {
+            position: absolute; top: -2px; left: 12px;
+            font-size: 1.1rem; color: var(--pitch-bright);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* Lazy-load placeholder shimmer */
+        .team-photo-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(
+                90deg,
+                var(--dark) 0%,
+                rgba(45,145,66,0.08) 50%,
+                var(--dark) 100%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 1.8s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes shimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .team-photo-placeholder span {
+            font-size: 3rem;
+            opacity: 0.12;
+            animation: floatBall 3s ease-in-out infinite;
+        }
+
+        .team-photo-main {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            /* Hidden until loaded */
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            position: absolute;
+            top: 0; left: 0;
+        }
+        .team-photo-main.loaded {
+            opacity: 1;
+            position: relative;
+        }
+
+        .team-photo-caption {
+            background: var(--pitch-dk);
+            padding: 0.9rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            border-top: 2px solid var(--pitch);
+        }
+        .team-caption-left {
+            display: flex; align-items: center; gap: 10px;
+        }
+        .team-caption-ball {
+            font-size: 1.5rem;
+            animation: spin 4s linear infinite;
+            display: inline-block;
+        }
+        .team-caption-text {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(0.85rem, 3vw, 1rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--pitch-bright);
+        }
+        .team-caption-sub {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(240,244,240,0.4);
+        }
+        .team-year-badge {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #0a0f0b;
+            background: linear-gradient(135deg, var(--accent-dk), var(--accent));
+            padding: 4px 14px;
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+        }
+
         /* ══════════════════ COMMITTEE ══════════════════ */
         .committee-section { background: var(--dark2); }
         .committee-grid {
@@ -1034,6 +1169,7 @@
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#committee">Committee</a>
+                <a href="#our-team">Team</a>
                 <a href="#activities">Activities</a>
                 <a href="#gallery">Gallery</a>
                 <a href="#youtube-videos">Videos</a>
@@ -1047,6 +1183,7 @@
             <a href="#home">Home</a>
             <a href="#about">About Us</a>
             <a href="#committee">Committee</a>
+            <a href="#our-team">Our Team</a>
             <a href="#activities">Activities</a>
             <a href="#gallery">Gallery</a>
             <a href="#youtube-videos">Videos</a>
@@ -1229,6 +1366,53 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════ OUR TEAM ══════════════════ -->
+        <section id="our-team" class="team-section pitch-stripes">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">⚽ The Squad</span>
+                    <h3 class="section-title">Our Football Team</h3>
+                    <div class="section-rule"></div>
+                </div>
+
+                <div class="team-photo-container reveal">
+                    <div class="team-photo-frame">
+                        <!-- Corner flag left -->
+                        <span class="team-flag-left" aria-hidden="true">⚑</span>
+
+                        <!-- Shimmer placeholder shown until image loads -->
+                        <div class="team-photo-placeholder" id="teamPlaceholder" aria-hidden="true">
+                            <span>⚽</span>
+                        </div>
+
+                        <!-- The actual 7MB image — lazy loaded, only downloads when user scrolls here -->
+                        <img
+                            id="teamPhoto"
+                            class="team-photo-main"
+                            src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/d3ecf2d2df37a2f1f680164df56744b151e8b60d/UNESCO%20CLUB%20FOOTBALL%20TEAM.jpg"
+                            alt="UNESCO Arts & Sports Club Football Team – Pilakkottupadam, Karulai, Malappuram"
+                            width="1600"
+                            height="900"
+                            loading="lazy"
+                            decoding="async"
+                            fetchpriority="low"
+                        >
+
+                        <div class="team-photo-caption">
+                            <div class="team-caption-left">
+                                <span class="team-caption-ball" aria-hidden="true">⚽</span>
+                                <div>
+                                    <div class="team-caption-text">UNESCO Club Football Team</div>
+                                    <div class="team-caption-sub">Pilakkottupadam · Karulai · Malappuram</div>
+                                </div>
+                            </div>
+                            <div class="team-year-badge">2026</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1459,6 +1643,25 @@
             if (emailEl) {
                 emailEl.textContent = email;
                 emailEl.addEventListener('click', function () { window.location.href = 'mailto:' + email; });
+            }
+        })();
+
+        /* ── Team photo: hide placeholder once image loads ── */
+        (function () {
+            var img = document.getElementById('teamPhoto');
+            var placeholder = document.getElementById('teamPlaceholder');
+            if (!img) return;
+            function onLoaded() {
+                img.classList.add('loaded');
+                if (placeholder) placeholder.style.display = 'none';
+            }
+            if (img.complete && img.naturalWidth > 0) {
+                onLoaded();
+            } else {
+                img.addEventListener('load', onLoaded);
+                img.addEventListener('error', function () {
+                    if (placeholder) placeholder.innerHTML = '<span style="font-size:1rem;opacity:0.4;color:var(--pitch-bright);">⚽ Image loading...</span>';
+                });
             }
         })();
 
