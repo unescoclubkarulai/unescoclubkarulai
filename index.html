@@ -532,6 +532,72 @@
         }
         .about-card strong { color: var(--pitch-bright); }
 
+        /* ══════════════════ OUR TEAM — FULL WIDTH PHOTO ══════════════════ */
+        .team-section {
+            background: var(--dark2);
+        }
+        .team-photo-outer {
+            max-width: 1200px;
+            margin: 0 auto;
+            border: 3px solid var(--pitch-lt);
+            box-shadow: 0 0 0 1px rgba(60,184,90,0.1), 0 20px 60px rgba(0,0,0,0.6);
+            overflow: hidden;
+            background: var(--dark);
+        }
+        .team-photo-outer img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .team-photo-bar {
+            background: var(--pitch-dk);
+            border-top: 3px solid var(--pitch-bright);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .team-photo-bar-left {
+            display: flex; align-items: center; gap: 10px;
+        }
+        .team-photo-bar-icon {
+            font-size: 1.4rem;
+            animation: spin 5s linear infinite;
+            display: inline-block;
+        }
+        .team-photo-bar-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+        .team-photo-bar-sub {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(240,244,240,0.4);
+            margin-top: 2px;
+        }
+        .team-photo-bar-badge {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #0a0f0b;
+            background: linear-gradient(135deg, var(--accent-dk), var(--accent));
+            padding: 5px 16px;
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+            white-space: nowrap;
+        }
+
+        /* OLD CINEMATIC — keeping year badge below */
         /* ══════════════════ OUR TEAM — CINEMATIC STYLE ══════════════════ */
         .team-section {
             background: var(--black);
@@ -1419,64 +1485,36 @@
         </section>
 
         <!-- ══════════════════ OUR TEAM ══════════════════ -->
-        <section id="our-team" class="team-section">
-
-            <div class="cinematic-wrap reveal">
-
-                <!-- Top bar -->
-                <div class="cinematic-header-bar">
-                    <span class="cinematic-header-tag">⚽ The Squad</span>
-                    <span class="cinematic-header-title">Our Football Team</span>
-                    <span class="cinematic-season">Season 2026</span>
+        <section id="our-team" class="team-section pitch-stripes">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-tag">⚽ The Squad</span>
+                    <h3 class="section-title">Our Football Team</h3>
+                    <div class="section-rule"></div>
                 </div>
-
-                <!-- Full-width team photo -->
-                <img
-                    id="teamPhoto"
-                    src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/main/UNESCO%20CLUB%20FOOTBALL%20TEAM.jpg"
-                    alt="UNESCO Arts & Sports Club Football Team – Pilakkottupadam, Karulai, Malappuram"
-                    width="1600"
-                    height="900"
-                    loading="eager"
-                    decoding="async"
-                    fetchpriority="high"
-                    onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/d3ecf2d2df37a2f1f680164df56744b151e8b60d/UNESCO%20CLUB%20FOOTBALL%20TEAM.jpg';"
-                >
-
-                <!-- Dark overlay -->
-                <div class="cinematic-overlay"></div>
-
-                <!-- Bottom text block -->
-                <div class="cinematic-text">
-                    <div class="cinematic-eyebrow">⚑ Pilakkottupadam · Karulai Panchayath</div>
-                    <div class="cinematic-title">UNESCO<br><span>Football</span><br>Team</div>
-                    <div class="cinematic-sub">Malappuram · Kerala · Est. 2013</div>
-                    <div class="cinematic-stats">
-                        <div class="cinematic-stat">
-                            <span class="cinematic-stat-num">2013</span>
-                            <span class="cinematic-stat-lbl">Founded</span>
+                <div class="team-photo-outer reveal">
+                    <img
+                        src="https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/main/UNESCO%20CLUB%20FOOTBALL%20TEAM.jpg"
+                        alt="UNESCO Arts & Sports Club Football Team – Pilakkottupadam, Karulai, Malappuram"
+                        width="1600"
+                        height="900"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
+                        onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/unescoclubkarulai/unescoclubkarulai/d3ecf2d2df37a2f1f680164df56744b151e8b60d/UNESCO%20CLUB%20FOOTBALL%20TEAM.jpg';"
+                    >
+                    <div class="team-photo-bar">
+                        <div class="team-photo-bar-left">
+                            <span class="team-photo-bar-icon">⚽</span>
+                            <div>
+                                <div class="team-photo-bar-name">UNESCO Club Football Team</div>
+                                <div class="team-photo-bar-sub">Pilakkottupadam · Karulai · Malappuram · Kerala</div>
+                            </div>
                         </div>
-                        <div class="cinematic-divider"></div>
-                        <div class="cinematic-stat">
-                            <span class="cinematic-stat-num">10+</span>
-                            <span class="cinematic-stat-lbl">Seasons</span>
-                        </div>
-                        <div class="cinematic-divider"></div>
-                        <div class="cinematic-stat">
-                            <span class="cinematic-stat-num">#1</span>
-                            <span class="cinematic-stat-lbl">Club in Karulai</span>
-                        </div>
-                        <div class="cinematic-divider"></div>
-                        <div class="cinematic-stat">
-                            <span class="cinematic-stat-num">MLP</span>
-                            <span class="cinematic-stat-lbl">District</span>
-                        </div>
+                        <div class="team-photo-bar-badge">Season 2026</div>
                     </div>
                 </div>
-
             </div>
-            <div class="cinematic-bottom-rule"></div>
-
         </section>
 
         <!-- ACTIVITIES -->
